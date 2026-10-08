@@ -1,0 +1,328 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": true,
+		"color": {
+			"palette": [
+				{
+					"color": "#fffaee",
+					"name": "Base (sandy white)",
+					"slug": "base"
+				},
+				{
+					"color": "#011b3b",
+					"name": "Contrast (dark grayish)",
+					"slug": "contrast"
+				},
+				{
+					"color": "#5aa4e1",
+					"name": "Primary",
+					"slug": "primary"
+				},
+				{
+					"color": "#044c88",
+					"name": "Secondary",
+					"slug": "secondary"
+				},
+				{
+					"color": "#12afa9",
+					"name": "Tertiary",
+					"slug": "tertiary"
+				},
+				{
+					"color": "#030f63",
+					"name": "dark midnight blue",
+					"slug": "dark-midnight-blue"
+				},
+				{
+					"color": "#191970",
+					"name": "midnight blue",
+					"slug": "midnight-blue"
+				},
+				{
+					"color": "#4b8402",
+					"name": "soft grass green",
+					"slug": "soft-grass-green"
+				},
+				{
+					"color": "#e50691",
+					"name": "dark deep pink",
+					"slug": "dark-deep-pink"
+				},
+				{
+					"color": "#b80122",
+					"name": "pinkish red alert",
+					"slug": "pinkish-red-alert"
+				},
+				{
+					"color": "#ffc0cb",
+					"name": "pale pink",
+					"slug": "pale-pink"
+				},
+				{
+					"color": "#ffe8b7",
+					"name": "sandy yellow",
+					"slug": "sandy-yellow"
+				}
+			],
+			"customDuotone": false,
+			"customGradient": false,
+			"defaultGradients": false,
+			"defaultPalette": false,
+			"duotone": [],
+			"gradients": []
+		},
+		"layout": {
+			"contentSize": "650px",
+			"wideSize": "1200px"
+		},
+		"spacing": {
+			"spacingScale": {
+				"steps": 0
+			},
+			"spacingSizes": [
+				{
+					"size": "clamp(1.5rem, 5vw, 2rem)",
+					"slug": "30",
+					"name": "1"
+				},
+				{
+					"size": "clamp(1.8rem, 1.8rem + ((1vw - 0.48rem) * 2.885), 3rem)",
+					"slug": "40",
+					"name": "2"
+				},
+				{
+					"size": "clamp(2.5rem, 8vw, 4.5rem)",
+					"slug": "50",
+					"name": "3"
+				},
+				{
+					"size": "clamp(3.75rem, 10vw, 7rem)",
+					"slug": "60",
+					"name": "4"
+				},
+				{
+					"size": "clamp(5rem, 5.25rem + ((1vw - 0.48rem) * 9.096), 8rem)",
+					"slug": "70",
+					"name": "5"
+				},
+				{
+					"size": "clamp(7rem, 14vw, 11rem)",
+					"slug": "80",
+					"name": "6"
+				}
+			],
+			"units": [
+				"%",
+				"px",
+				"em",
+				"rem",
+				"vh",
+				"vw"
+			]
+		},
+		"typography": {
+			"dropCap": false,
+			"fluid": true,
+			"fontFamilies": [
+				{
+					"fontFace": [
+						{
+							"fontFamily": "Atkinson Hyperlegible",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "700",
+							"src": [
+								"file:./fonts/atkinson-Hyperlegible-Bold-102a.woff2"
+							]
+						},
+						{
+							"fontFamily": "Atkinson Hyperlegible",
+							"fontStretch": "normal",
+							"fontStyle": "italic",
+							"fontWeight": "700",
+							"src": [
+								"file:./fonts/atkinson-Hyperlegible-BoldItalic-102a.woff2"
+							]
+						},
+						{
+							"fontFamily": "Atkinson Hyperlegible",
+							"fontStretch": "normal",
+							"fontStyle": "italic",
+							"fontWeight": "400",
+							"src": [
+								"file:./fonts/atkinson-Hyperlegible-Italic-102a.woff2"
+							]
+						},
+						{
+							"fontFamily": "Atkinson Hyperlegible",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "400",
+							"src": [
+								"file:./fonts/atkinson-Hyperlegible-Regular-102a.woff2"
+							]
+						}
+					],
+					"fontFamily": "\"Atkinson Hyperlegible\", sans-serif",
+					"name": "Atkinson Hyperlegible",
+					"slug": "atkinson-hyperlegible"
+				},
+
+				{
+					"fontFace": [
+						{
+							"fontFamily": "Markazi Text",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "700",
+							"src": [
+								"file:./fonts/markazi-text-v28-arabic_latin_latin-ext-700.woff2"
+							]
+						},
+						{
+							"fontFamily": "Markazi Text",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "400",
+							"src": [
+								"file:./fonts/markazi-text-v28-arabic_latin_latin-ext-regular.woff2"
+							]
+						}
+					],
+					"fontFamily": "\"Markazi Text\", serif",
+					"name": "Markazi Text",
+					"slug": "markazi-text"
+				},
+
+				{
+					"fontFace": [
+						{
+							"fontFamily": "Manrope",
+							"fontStyle": "auto",
+							"fontWeight": "300 900",
+							"fontVariationSettings": "'MONO' 0, 'CRSV' 0, 'CASL' 0, 'slnt' 0",
+							"src": [
+								"file:./fonts/manrope-v20-cyrillic_latin_latin-ext-regular.woff2"
+							]
+						},
+						{
+							"fontFamily": "Manrope",
+							"fontStyle": "italic",
+							"fontWeight": "300 900",
+							"fontVariationSettings": "'MONO' 0, 'CRSV' 0, 'CASL' 0, 'slnt' -14",
+							"src": [
+								"file:./fonts/manrope-v20-cyrillic_latin_latin-ext-regular.woff2"
+							]
+						}
+					],
+					"fontFamily": "\"Manrope\", sans-serif",
+					"name": "Manrope (Variable)",
+					"slug": "manrope"
+				},
+
+				{
+					"fontFace": [
+						{
+							"fontFamily": "Nunito",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "300",
+							"src": [
+								"file:./fonts/nunito-v26-latin-300.woff2"
+							]
+						},
+						{
+							"fontFamily": "Nunito",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "700",
+							"src": [
+								"file:./fonts/nunito-v26-latin-700.woff2"
+							]
+						}
+					],
+					"fontFamily": "\"Nunito\", \"Avenir\", \"Futura\", \"Helvetica\", sans-serif",
+					"name": "Nunito",
+					"slug": "nunito"
+				},
+
+				{
+					"fontFace": [
+						{
+							"fontFamily": "Roboto Slab",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "700",
+							"src": [
+								"file:./fonts/roboto-slab-v34-latin_latin-ext-700.woff2"
+							]
+						},
+						{
+							"fontFamily": "Roboto Slab",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "400",
+							"src": [
+								"file:./fonts/roboto-slab-v34-latin_latin-ext-regular.woff2"
+							]
+						}
+					],
+					"fontFamily": "\"Roboto Slab\", sans-serif",
+					"name": "Roboto Slab",
+					"slug": "roboto-slab"
+				},
+
+				{
+					"fontFace": [
+						{
+							"fontFamily": "Roboto Slab Black",
+							"fontStretch": "normal",
+							"fontStyle": "normal",
+							"fontWeight": "900",
+							"src": [
+								"file:./fonts/roboto-slab-black.ttf"
+							]
+						}
+					],
+					"fontFamily": "\"Roboto Slab Black\", \"Arial Black\" sans-serif",
+					"name": "Roboto Slab Black",
+					"slug": "roboto-slab-black"
+				},
+
+				{
+					"fontFamily": "-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen-Sans,Ubuntu,Cantarell,\"Helvetica Neue\",sans-serif",
+					"name": "System Font",
+					"slug": "system-font"
+				}
+			],
+			"fontSizes": [
+				{
+					"fluid": {
+						"min": "0.875rem",
+						"max": "1rem"
+					},
+					"size": "1rem",
+					"slug": "small"
+				},
+				{
+					"size": "1.5625rem",
+					"slug": "small",
+					"fluid": false
+				},
+				{
+					"size": "1.8594rem",
+					"slug": "subline",
+					"fluid": false
+				},
+				{
+					"size": "2.625rem",
+					"slug": "large",
+					"fluid": false
+				}
+			]
+		},
+		"useRootPaddingAwareAlignments": true
+	}
+}

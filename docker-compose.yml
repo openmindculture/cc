@@ -1,0 +1,80 @@
+services:
+  db:
+    image: mariadb:latest
+    command: '--default-authentication-plugin=mysql_native_password'
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=wordpress
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress
+    ports:
+      - "3306:3306"
+    networks:
+      - docker-compose_default
+
+  wordpress:
+    image: wordpress:latest # see https://hub.docker.com/_/wordpress/
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_ENVIRONMENT_TYPE', 'local');
+        define('WP_HOME', 'http://localhost:8204');
+        define('WP_SITEURL', 'http://localhost:8204');
+      WORDPRESS_DEBUG: 1
+      UPLOAD_LIMIT: 64M
+    # shared volumes
+    volumes:
+      # optionally mount WordPress installation
+      # so that we can use WordPress source for syntax assistance
+      # and inspect other themes and plugins' source code if necessary
+      - "./wp_data:/var/www/html"
+      # mount themes redundantly so that we can ignore wp_data in git and search
+      - "./themes:/var/www/html/wp-content/themes:rw"
+      # increase allowed upload file size so that we can import shop data:
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    ports:
+      - "8204:80"
+    networks:
+      - docker-compose_default
+    depends_on:
+      - db
+
+  wp-cli:
+    image: wordpress:cli
+    volumes:
+      - ./wp_data:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    networks:
+      - docker-compose_default
+    links:
+      - db:db
+    depends_on:
+      - wordpress
+    command: >
+      sh -c '
+      echo "Preparing WordPress installation...";
+      sleep 10;
+      wp core install --url="http://localhost:8204" --title="localhost" --admin_user="admin" --admin_password="secret" --admin_email="info@example.com" --skip-email;
+      sleep 10;
+      wp theme activate twentytwentyfive-child;
+      '
+    entrypoint: []
+
+networks:
+  docker-compose_default:
+    name: docker-compose_default
+
+volumes:
+  db_data:
+    driver:
+      local
+  wp_data:

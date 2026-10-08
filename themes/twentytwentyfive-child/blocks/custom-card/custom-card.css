@@ -1,0 +1,89 @@
+.wp-block-custom-card {
+  position: relative;
+  z-index: 12;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 280px;
+  width: 280px;
+  max-width: 90%;
+  margin-bottom: 32px;
+  padding: 34px 24px 24px 24px;
+  border-radius: 16px;
+}
+
+.wp-block-custom-card,
+.wp-block-custom-card p,
+.wp-block-custom-card a,
+.wp-block-custom-card a:link,
+.wp-block-custom-card a:visited,
+.wp-block-custom-card a:active {
+  text-align: center;
+}
+
+.wp-block-custom-card img {
+  max-width: unset;
+}
+
+.wp-block-custom-card > p:last-child {
+  margin-bottom: 20px;
+}
+
+@media (min-width: 1200px) {
+  .wp-block-custom-card {
+    width: 90%;
+    min-height: 450px;
+  }
+}
+
+/* .wp-block-custom-card:last-child:hover::after { */
+.wp-block-custom-card:hover > *:last-child::after {
+  content: "";
+  top: 0;
+  left: 34%;
+  transform: translateX(100%);
+  width: 30%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  animation: custom-slide 0.5s 1 forwards ease-in;
+
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.8) 50%,
+    rgba(128,186,232,0) 80%,
+    rgba(125,185,232,0) 100%
+  );
+}
+
+@media (prefers-reduced-motion) {
+  .wp-block-custom-card::after {
+    display: none;
+  }
+}
+
+@keyframes custom-slide {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateX(50%);
+    opacity: 0.5;
+  }
+  80% {
+    transform: translateX(80%);
+    opacity: 0.25;
+  }
+  90% {
+    transform: translateX(90%);
+    opacity: 0.125;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

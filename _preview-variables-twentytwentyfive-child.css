@@ -1,0 +1,45 @@
+/** This preview file is NOT used in the frontend!
+    You can use it to expose theme.json colors and settings
+    redundantly for better preview, autocompletion and to prevent unresolved var() errors at development time
+ */
+
+:root {
+    --wp--preset--color--base: #fafafa; /* book cover artwork lightest */
+    --wp--preset--color--primary: #232227; /* book cover dark drawing */
+    --wp--preset--color--secondary: #aa273d; /* ed */
+    --wp--preset--color--tertiary: #CC6600; /* Sedona Tenné Tawny */
+    --wp--preset--color--contrast: #364976; /* Birkbeck academy blue */
+    --color-bloodred: #5f0005; /*  book cover art: Bios Politikos */
+    --color-darkpurple: #4d2432; /*  book cover Peter Lang series */
+    --color-light: #dbbe84; /*  book cover text */
+    --wp--preset--color--black: #000000;
+    --color-beigelatour: #969183;
+    --color-bluelatour: #026576;
+    --color-backdropdelatour: #dedfc8;
+    --color-redpurpledelatour: #d01f51;
+
+    /* Adjust the colors above to the theme.json palette for a proper editor preview!
+     * Auto-generated class names follow the pattern .has-{preset-slug}-{preset-category}
+     * e.g.
+    */
+
+    .has-base-color {
+        color: var(--wp--preset--color--base);
+    }
+
+    /* You might use arbitrary values below just to ensure the properties are not undefined */
+
+    --wp--preset--font-family--lato: Lato, sans-serif;
+
+    --wp--style--root--padding-top: 1rem;
+    --wp--style--root--padding-bottom: 1rem;
+    --wp--preset--font-size--small: small;
+    --wp--preset--font-size--medium: medium;
+    --wp--preset--font-size--large: large;
+    --wp--preset--spacing--30: 2rem;
+    --wp--preset--spacing--40: 3rem;
+    --wp--preset--spacing--50: 4.5rem;
+    --wp--preset--spacing--60: 7rem;
+    --wp--preset--spacing--70: 8rem;
+    --wp--preset--spacing--80: 11rem;
+}
