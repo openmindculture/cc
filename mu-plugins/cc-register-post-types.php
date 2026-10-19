@@ -5,7 +5,7 @@
  * @version 1.1.0
  *
  * @wordpress-plugin
- * Version: 4.4.0
+ * Version: 1.1.0
  * Tested up to: 7.1
  * Plugin Name: CC Register Custom Post Types
  * Text Domain: cc-register-custom-post-types

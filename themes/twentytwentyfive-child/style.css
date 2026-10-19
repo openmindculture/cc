@@ -170,6 +170,23 @@ header,
     color: var(--wp--preset--color--primary);
 }
 
+.site-header-color {
+    background-color: var(--wp--preset--color--secondary);
+    color: var(--wp--preset--color--base);
+    margin-top: 1rem;
+}
+
+.site-header-color,
+.site-header-color .site-header-inner,
+.site-header-color .site-header-inner .site-header-row {
+    color: var(--wp--preset--color--base);
+}
+
+.site-header-color .image-wrap {
+    background-color: var(--wp--preset--color--base);
+    margin-top: -2rem;
+}
+
 .site-title,
 .wp-block-site-title {
     color: var(--wp--preset--color--primary);

@@ -6,27 +6,27 @@
 		"color": {
 			"palette": [
 				{
-					"color": "#fffaee",
-					"name": "Base (sandy white)",
+					"color": "#fafafa",
+					"name": "Base (off-white)",
 					"slug": "base"
 				},
 				{
-					"color": "#011b3b",
-					"name": "Contrast (dark grayish)",
+					"color": "#364976",
+					"name": "Contrast (academy blue)",
 					"slug": "contrast"
 				},
 				{
-					"color": "#5aa4e1",
+					"color": "#232227",
 					"name": "Primary",
 					"slug": "primary"
 				},
 				{
-					"color": "#044c88",
+					"color": "#aa273d",
 					"name": "Secondary",
 					"slug": "secondary"
 				},
 				{
-					"color": "#12afa9",
+					"color": "#CC6600",
 					"name": "Tertiary",
 					"slug": "tertiary"
 				},
