@@ -53,7 +53,7 @@ add_action('init',
                 return current_user_can('edit_posts');
             },
         ));
-        register_post_meta('film', 'isbn', array(
+        register_post_meta('book', 'isbn', array(
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
