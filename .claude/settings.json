@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "defaultMode": "default",
+    "allow": [
+      "Bash(docker compose ps)",
+      "Bash(docker compose logs:*)",
+      "Bash(docker compose run --rm wp-cli wp cache flush)",
+      "Bash(docker compose run --rm wp-cli wp post list:*)",
+      "Bash(docker compose run --rm wp-cli wp option get:*)",
+      "Bash(docker compose run --rm wp-cli wp theme list:*)",
+      "Bash(docker compose run --rm wp-cli wp plugin list:*)",
+      "Bash(npm run eslint)",
+      "Bash(npx stylelint:*)",
+      "Bash(php -l:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./**/*.pem)",
+      "Read(./**/*.key)",
+      "Bash(git push:*)",
+      "Bash(npm run destroy:*)",
+      "Bash(docker-compose down -v:*)",
+      "Bash(docker compose down -v:*)",
+      "Bash(docker compose run --rm wp-cli wp db:*)"
+    ]
+  }
+}
