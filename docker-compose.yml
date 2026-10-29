@@ -15,7 +15,7 @@ services:
       - docker-compose_default
 
   wordpress:
-    image: wordpress:latest # see https://hub.docker.com/_/wordpress/
+    image: wordpress:php8.2-apache # see https://hub.docker.com/_/wordpress/
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: wordpress
@@ -32,9 +32,9 @@ services:
       # optionally mount WordPress installation
       # so that we can use WordPress source for syntax assistance
       # and inspect other themes and plugins' source code if necessary
-      - "./wp_data:/var/www/html"
+      # - "./wp_data:/var/www/html"
       # mount themes redundantly so that we can ignore wp_data in git and search
-      - "./themes:/var/www/html/wp-content/themes:rw"
+      - "./themes/twentytwentyfive-child:/var/www/html/wp-content/themes/twentytwentyfive-child:rw"
       # increase allowed upload file size so that we can import shop data:
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     ports:
