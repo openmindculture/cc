@@ -1,7 +1,7 @@
 # DESIGN.md — Claudio Canaparo website
 
 Design source of truth for the WordPress block child theme.
-Canvas: "Canaparo Website Design", page **v2 · Index**. Version **v2.1**, 29 October 2026.
+Canvas: "Canaparo Website Design", page **v2 · Index**. Version **v2.2**, 29 October 2026.
 
 > For coding sessions: implement from this file, not from screenshots. Values here are exact.
 > When this file changes, read the **Changes** section and `git diff` and apply only what changed.
@@ -12,6 +12,7 @@ Canvas: "Canaparo Website Design", page **v2 · Index**. Version **v2.1**, 29 Oc
 
 | Version | Date | Change |
 |---|---|---|
+| v2.2 | 2026-10-29 | Implemented in the repo (theme.json, style.css, PHP templates) and checked in a browser at 390/768/1280/1440 px. Palette slugs follow Twenty Twenty-Five: `ink` → `contrast`, `ink-quiet` → `contrast-quiet` (keeps the parent's styles working). Publication URLs: `/publications/`, `/publications/{type}/`, `/publication/{slug}/`. Quotation band from page fields (Quote block stays disallowed). Mobile: index after the content, reached via the "Index" link. |
 | v2.1 | 2026-10-29 | §7 rewritten for the actual repo: hybrid theme (classic header/footer), CPTs in the mu-plugin, meta names aligned (`isbn` stays the print ISBN), publication meta added, legacy redirects. §10: architecture and language questions added. No visual changes. |
 | v2.0 | 2026-10-29 | First handoff. Direction "Index": monochrome text, one pastel field per page. Replaces v1 (wine & gold), see *Rejected*. |
 
@@ -52,8 +53,8 @@ Images are meant to be read, not to decorate. Captions are hidden behind a "What
 
 | Token (theme.json slug) | Hex | Use | Contrast |
 |---|---|---|---|
-| `ink` | `#1E1E1C` | All text, links, rules, outline buttons | 16.7:1 on white, ≥ 11.4:1 on every field |
-| `ink-quiet` | `#55544E` | Metadata, captions, secondary text | 7.6:1 on white, ≥ 5.18:1 on every field |
+| `contrast` (Ink) | `#1E1E1C` | All text, links, rules, outline buttons | 16.7:1 on white, ≥ 11.4:1 on every field |
+| `contrast-quiet` (Ink, quiet) | `#55544E` | Metadata, captions, secondary text | 7.6:1 on white, ≥ 5.18:1 on every field |
 | `base` | `#FFFFFF` | Page ground. Plain white, not cream. | — |
 | `hairline` | `#CFCDC6` | Row dividers. Decorative only, never the sole indicator of anything. | 1.6:1 (decorative) |
 | `focus` | `#026576` | Focus ring and link hover **only**. Never body text. | 6.7:1 on white, ≥ 4.59:1 on fields (needs ≥ 3:1 as a non-text indicator) |
@@ -137,7 +138,7 @@ Archivo is unrelated to the cover typography on purpose. Spectral is a screen-fi
 - **Home:** search top right; the name very large below it; under the name, "Professor / Université de Bordeaux" in `ink-quiet` at the top of the index column.
 - **Inner pages:** name at 64 px, top left, linking home; search at right.
 - **Search:** an input with a bottom border only, with an icon button inside (44 × 44 px, `aria-label="Search"`).
-- **Mobile:** a top bar with an "Index" text button on the left and a search icon on the right, separated by an `ink` rule, then the name at 84 px. The full index is repeated at the bottom of the page.
+- **Mobile (≤ 820 px):** a top bar with an "Index" link on the left and search on the right over one `ink` rule, then the name (84 px on Home, 48 px elsewhere) and, on Home, the affiliation. The index itself follows the page content; the "Index" link jumps to it (no JavaScript, no duplicate navigation).
 
 ### Index navigation
 - Vertical list in the index column. `ink` rule on top, `hairline` between items.
@@ -231,11 +232,11 @@ The table assumes **A**. The FSE equivalent is noted where it differs.
 | Header (home + inner) | `header.php`: `is_front_page()` switches between the large name and the 64 px name. Search is a plain GET form. Remove the logo image and the coloured header row. | `parts/header*.html` |
 | Index navigation | `wp_nav_menu( [ 'theme_location' => 'primary' ] )`. The location is already registered; editors manage it in Appearance → Menus. Replaces `wp_list_pages`. | Navigation block |
 | Footer | `footer.php`: copyright + Contact · Imprint · Privacy policy · Sitemap. Decide whether the share links stay; they aren't in the design. | `parts/footer.html` |
-| Front page | `front-page.php`: intro (page content), field image, quotation band, Recently list (`WP_Query` across `book`, `publication`, `post`). | `templates/front-page.html` + Query Loop |
+| Front page | `front-page.php`: featured image printed into the field (caption → "What is this?"), intro = page content, quotation band from the page fields `cc_quote`, `cc_quote_source`, `cc_quote_lang` ("Page design" panel), Recently list (`WP_Query` across `book`, `publication`, `post`). Affiliation = site tagline. | `templates/front-page.html` + Query Loop |
 | Books index | `archive-book.php`, with the sort links as `?orderby=` handled in `pre_get_posts` | `templates/archive-book.html` |
 | Single book | `single-book.php`: meta `<dl>` from post meta, abstract = excerpt + content, Contents and Reviews as Details blocks in the content, Cite generated in PHP | `templates/single-book.html` + Block Bindings |
 | Publications | `archive-publication.php` + `taxonomy-publication_type.php`, grouped by year | block templates |
-| Field per page | Post meta `cc_field` (enum of the 5 slugs) on page, post, book and publication, with a small editor panel. The `body_class` filter (already in `customize-frontend.php`) adds `has-field-{slug}`, and CSS sets `--field`. | same |
+| Field per page | Post meta `cc_field` (enum of the 5 slugs) on page, post, book and publication, set in the "Page design" editor panel. Template defaults: front page sage, books index stone, single book rose, publications lagoon, search and 404 apricot, everything else sage. `body_class` adds `has-field-{slug}`; CSS sets `--field`. | same |
 | Field block | Block style "Field" on Group (`background: var(--field)`) | same |
 | Printed image | Block style "Printed" on Image | also on Cover, if allowed |
 | "What is this?" | Pattern: Image + Details. Details is already allowed. The existing "Weniger" close-button filter must be made language-aware or removed. | same |
@@ -244,61 +245,9 @@ The table assumes **A**. The FSE equivalent is noted where it differs.
 | Media, Notes | Regular posts with categories | same |
 | Legacy URLs | `inc/functions/redirect-historic-urls.php`: map the old `canaparo.org/Publications/*.shtml` and `/CC/*.shtml` pages to the new archives | same |
 
-### theme.json starting point
+### theme.json
 
-```json
-{
-  "$schema": "https://schemas.wp.org/trunk/theme.json",
-  "version": 3,
-  "settings": {
-    "color": {
-      "defaultPalette": false, "defaultGradients": false, "custom": false,
-      "palette": [
-        { "slug": "ink", "name": "Ink", "color": "#1E1E1C" },
-        { "slug": "ink-quiet", "name": "Ink, quiet", "color": "#55544E" },
-        { "slug": "base", "name": "White", "color": "#FFFFFF" },
-        { "slug": "hairline", "name": "Hairline", "color": "#CFCDC6" },
-        { "slug": "focus", "name": "Focus", "color": "#026576" },
-        { "slug": "field-sage", "name": "Field: sage", "color": "#DEDFC8" },
-        { "slug": "field-stone", "name": "Field: stone", "color": "#DAD5C8" },
-        { "slug": "field-lagoon", "name": "Field: lagoon", "color": "#CFDFDD" },
-        { "slug": "field-rose", "name": "Field: rose", "color": "#EED6DB" },
-        { "slug": "field-apricot", "name": "Field: apricot", "color": "#F1DCC4" }
-      ]
-    },
-    "layout": { "contentSize": "42rem", "wideSize": "80rem" },
-    "spacing": {
-      "spacingSizes": [
-        { "slug": "20", "name": "8",   "size": "0.5rem" },
-        { "slug": "30", "name": "16",  "size": "1rem" },
-        { "slug": "40", "name": "24",  "size": "1.5rem" },
-        { "slug": "50", "name": "40",  "size": "2.5rem" },
-        { "slug": "60", "name": "64",  "size": "4rem" },
-        { "slug": "70", "name": "104", "size": "6.5rem" }
-      ]
-    },
-    "typography": {
-      "fontFamilies": [
-        { "slug": "display", "name": "Archivo", "fontFamily": "Archivo, system-ui, sans-serif" },
-        { "slug": "body", "name": "Spectral", "fontFamily": "Spectral, Georgia, serif" }
-      ]
-    }
-  },
-  "styles": {
-    "color": { "background": "var(--wp--preset--color--base)", "text": "var(--wp--preset--color--ink)" },
-    "typography": { "fontFamily": "var(--wp--preset--font-family--body)", "fontSize": "1.25rem", "lineHeight": "1.6" },
-    "elements": {
-      "link": {
-        "color": { "text": "var(--wp--preset--color--ink)" },
-        ":hover": { "color": { "text": "var(--wp--preset--color--focus)" } }
-      },
-      "heading": { "typography": { "fontFamily": "var(--wp--preset--font-family--display)", "fontWeight": "300" } }
-    }
-  }
-}
-```
-
-`fontFace` entries, font sizes, `font-stretch` per element and block styles are still to be added. `custom: false` keeps the client from picking off-palette colours.
+Implemented in `themes/twentytwentyfive-child/theme.json` (v2.2): palette as in §2, Archivo and Spectral self-hosted (Latin + Latin Extended woff2), font sizes `x-small` 13 px → `display` 168 px, spacing `20`–`70` = 8–104 px plus `80` = page gutter, `contentSize` 42rem, `wideSize` 80rem. Custom colours, gradients and duotones are switched off for editors.
 
 ---
 

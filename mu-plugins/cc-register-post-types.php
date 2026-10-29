@@ -111,9 +111,9 @@ add_action(
 						'edit_item'     => 'Edit publication',
 					),
 					'public'        => true,
-					'has_archive'   => true,
 					'menu_icon'     => 'dashicons-media-text',
 					'menu_position' => 21,
+					'has_archive'   => 'publications', // /publications/ — all types, by year.
 					'supports'      => array(
 						'title',
 						'editor',
@@ -122,7 +122,7 @@ add_action(
 					),
 					'taxonomies'    => array( 'publication_type' ),
 					'rewrite'       => array(
-						'slug' => 'publications',
+						'slug' => 'publication', // Single: /publication/{slug}/.
 					),
 					'show_in_rest'  => true,
 				)
@@ -143,7 +143,7 @@ add_action(
 					'show_admin_column' => true,
 					'show_in_rest'      => true,
 					'rewrite'           => array(
-						'slug' => 'publications/type',
+						'slug' => 'publications', // Type archives: /publications/articles/ etc.
 					),
 				)
 			);

@@ -65,14 +65,17 @@ themes/twentytwentyfive-child/
 ├── style.css            # theme header + CSS that theme.json cannot express
 ├── theme.json           # tokens and editor settings — first place to change
 ├── functions.php        # loads inc/functions/*
-├── header.php, footer.php, index.php    # hybrid frame
-├── (to add) front-page.php, archive-book.php, single-book.php, archive-publication.php, taxonomy-publication_type.php, search.php, 404.php
-├── inc/functions/       # customize-frontend.php, customize-backend.php, redirect-historic-urls.php
+├── header.php, footer.php                # hybrid frame
+├── index.php            # fallback: pages, posts, publications, archives, search, 404
+├── front-page.php, archive-book.php, single-book.php
+├── inc/functions/       # customize-frontend.php, customize-backend.php, redirect-historic-urls.php,
+│                        # field.php (field per page, quotation meta, editor panel), template-tags.php (nav, rows, citations, JSON-LD, book sorting)
+├── js/editor-field-panel.js   # "Page design" sidebar panel, no build step
 ├── blocks/custom-card/  # example custom block from the starter template
 ├── fonts/               # self-hosted woff2 (SIL OFL); remove fonts the design doesn't use
 └── js/scripts.js        # menu toggle, share link
 _preview-variables-twentytwentyfive-child.css   # IDE-only mirror of theme.json variables; keep in sync
-seed/books.csv           # book data for the idempotent seed script (data/ is gitignored)
+seed/books.csv, seed/seed.php   # book data + idempotent import (data/ is gitignored)
 material/                # source images — see the copyright note below
 ```
 
@@ -89,7 +92,7 @@ material/                # source images — see the copyright note below
 
 ## Data
 
-- `seed/books.csv` holds book data. The seed script must be idempotent: update by `isbn` or slug, never duplicate.
+- `seed/books.csv` holds book data; `seed/seed.php` imports it idempotently (update by slug or `isbn`, never duplicate; empty cells never overwrite known values). It needs the repo visible inside the WP-CLI container, e.g. `docker compose run --rm -v "$PWD:/repo" wp-cli wp eval-file /repo/seed/seed.php /repo/seed/books.csv /repo/data/covers`.
 - Include awkward cases on purpose, clearly marked as test rows: long titles, missing covers, Spanish, English and French entries, no DOI, several items in one year.
 - **This repository is public.** Don't commit cover images, artwork or unpublished client information. `material/` already contains cover scans; flag this to the developer rather than adding more.
 
@@ -102,7 +105,7 @@ For each changed template, check:
 1. **Viewport widths 390, 768, 1280 and 1440 px.**
    - Resize the window, then confirm the real width with `window.innerWidth` before judging the layout. The window is wider than the viewport.
    - No horizontal scroll at any width.
-   - At 820 px and below, the index column stacks above main.
+   - At 820 px and below, the index follows the main content and the header "Index" link jumps to it.
 2. **Console and PHP:**
    - No console errors from the theme.
    - No PHP notices in `docker compose logs wordpress`, since `WORDPRESS_DEBUG` is on.

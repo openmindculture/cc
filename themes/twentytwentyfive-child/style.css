@@ -2,508 +2,1015 @@
 Theme Name: CC
 Theme URI: https://github.com/openmindculture/cc
 Text Domain: twentytwentyfive-child
-Comment: ^ do NOT rename the Text Domain! (This line should be removed)
 Template: twentytwentyfive
 Author: @openmindculture
 Author URI: https://www.ingo-steinke.de/
-Description: Twenty Twenty-Five Child supports the WordPress template engine (theme.json) and Gutenberg block editor
-Requires at least: 6.1
+Description: Claudio Canaparo — Twenty Twenty-Five hybrid child theme. Design "Index": ink on white, one pastel field per page. See DESIGN.md.
+Requires at least: 6.6
 Tested up to: 7.1
-Requires PHP: 7.4
-Version: 0.0.1
+Requires PHP: 8.1
+Version: 0.2.0
 License: proprietary
 */
+
+/*
+ * Only what theme.json cannot express lives here (see CLAUDE.md):
+ * layout of the hybrid PHP templates, font-stretch, the field and
+ * printed-image treatment, disclosures, motion. All colours, fonts,
+ * sizes and spacing come from theme.json presets — no hex values here.
+ */
 
 /* DON'T enable W3 Total Cache CSS minify when using @import here! */
 @import url("blocks/custom-card/custom-card.css");
 
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+
 :root {
-    --wp--preset--font-size--small: 1.5625rem;
-    --wp--preset--font-size--subline: 1.8594rem;
-    --wp--preset--font-size--large: 2.625rem;
-    /* adaptive header sizes see below */
-    --wp--style--global--content-size: 784px;
-    --wp--style--global--wide-size: 1024px;
+	--cc-ink: var(--wp--preset--color--contrast);
+	--cc-quiet: var(--wp--preset--color--contrast-quiet);
+	--cc-paper: var(--wp--preset--color--base);
+	--cc-hairline: var(--wp--preset--color--hairline);
+	--cc-focus: var(--wp--preset--color--focus);
+	--cc-display: var(--wp--preset--font-family--display);
+	--cc-gutter: var(--wp--preset--spacing--80);
+	--cc-max: 80rem; /* 1280px */
+	--cc-col-gap: 1.5rem;
+	--cc-rule: 1px solid var(--cc-ink);
+	--cc-row-rule: 1px solid var(--cc-hairline);
+
+	/* Default field; overridden per page by body.has-field-{slug} */
+	--field: var(--wp--preset--color--field-sage);
 }
 
 html {
-    /* iOS Safari font size workaround */
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-    font-size: 16px;
-}
-
-body, p {
-    background-color: var(--wp--preset--color--base);
-    color: var(--wp--preset--color--contrast);
-    font-family: var(--wp--preset--font-family--manrope);
-    font-size: var(--wp--preset--font-size--small);
-    font-weight: 400; /* 400 regular normal */
-}
-
-b, strong {
-    color: var(--wp--preset--color--primary);
-    font-weight: 600; /* semibold */
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
 }
 
 body {
-    display: flex;
-    /* keep footer visible at the bottom (adjust to heights and spacing) */
-    min-height: calc(100vh - 3rem);
-    flex-direction: column;
-}
-
-main {
-    flex: 1;
-}
-
-main,
-.site-header-inner,
-.site-footer-inner,
-.alignwide {
-    max-width: 992px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* ensure layout for pages with little content */
-main,
-main .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
-.editor-styles-wrapper > .is-root-container.is-layout-constrained.block-editor-block-list__layout {
-    min-width: min(calc(100vw - 2rem), 992px);
+	margin: 0;
+	overflow-wrap: break-word;
 }
 
 img {
-    max-width: 992px;
-    height: auto;
-}
-
-@media (max-width: 992px) {
-    img {
-        max-width: 100%;
-    }
-
-    .wp-block-image img {
-        width: 100%;
-    }
-
-    body {
-        max-width: 100%;
-        overflow-x: hidden;
-        overflow-wrap: break-word;
-    }
-
-    main {
-        max-width: calc(100% - 2rem);
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    header .site-navigation-menu-link {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-    }
-
-    header .navigation-menu {
-        display: none;
-    }
-
-    header .navigation-menu.active,
-    header .navigation-menu:target {
-        display: block;
-    }
-
-    header .navigation-menu:target + .site-navigation-menu-link {
-        display: none;
-    }
-
-    header nav {
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 1rem;
-        background-color: var(--wp--preset--color--base);
-        z-index: 1;
-    }
-
-    header nav ul {
-        flex-direction: column;
-    }
-
-    header .site-navigation-menu-close {
-        font-size: 2rem;
-        text-decoration: none;
-        position: absolute;
-        right: 1rem;
-    }
-}
-
-@media (min-width: 993px) {
-    header .site-navigation-menu-close,
-    header .site-navigation-menu-link {
-        display: none;
-    }
-
-    header .site-header-row .site-navigation {
-        flex-basis: 100%;
-    }
-
-    header .site-navigation-menu-link {
-        display: none;
-    }
-}
-
-body.is-menu-open {
-    position: fixed;
-}
-
-body > .wp-site-blocks {
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-header,
-.wp-site-blocks header {
-    padding-top: var(--wp--style--root--padding-top);
-    background-color: var(--wp--preset--color--base);
-    color: var(--wp--preset--color--primary);
-}
-
-.site-header-color {
-    background-color: var(--wp--preset--color--secondary);
-    color: var(--wp--preset--color--base);
-    margin-top: 1rem;
-}
-
-.site-header-color,
-.site-header-color .site-header-inner,
-.site-header-color .site-header-inner .site-header-row {
-    color: var(--wp--preset--color--base);
-}
-
-.site-header-color .image-wrap {
-    background-color: var(--wp--preset--color--base);
-    margin-top: -2rem;
-}
-
-.site-title,
-.wp-block-site-title {
-    color: var(--wp--preset--color--primary);
-}
-
-.site-logo {
-    height: 100px;
-    width: auto;
-}
-
-header .site-header-row.is-layout-flex {
-    flex-wrap: nowrap;
-}
-
-header nav ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-header nav ul li {
-    position: relative;
-}
-
-nav ul li {
-    position: relative;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: currentColor;
-    padding: 1rem;
-    display: block;
-}
-
-nav ul li a:hover {
-    text-decoration: underline;
-}
-
-header nav > ul > li:hover,
-header nav > ul > li:hover > a,
-header nav > ul > li:focus,
-header nav > ul > li:focus > a,
-header nav ul li ul li:hover,
-header nav ul li ul li:hover a,
-header nav ul li ul li:focus,
-header nav ul li ul li:focus a {
-    background-color: var(--wp--preset--color--primary);
-    color: var(--wp--preset--color--base);
-    text-decoration: none;
-}
-
-/* Dropdown styles */
-nav ul ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    flex-direction: column;
-    background: var(--wp--preset--color--base);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    min-width: 200px;
-    z-index: 1000;
-    padding: 0.5rem 0 0.5rem 0;
-    gap: 0;
-}
-
-nav ul li:hover > ul,
-nav ul li:focus-within > ul {
-    display: flex;
-}
-
-nav ul ul li {
-    width: 100%;
-}
-
-/* Dropdown indicator */
-nav ul li.page_item_has_children > a::after {
-    content: " ▾";
-    font-size: 0.8em;
-    margin-left: 0.5rem;
-}
-
-@media (max-width: 992px) {
-    nav {
-        min-height: 100%;
-    }
-
-    nav ul ul {
-        position: relative;
-        display: block;
-        box-shadow: none;
-    }
-
-    nav ul li.page_item_has_children > a::after {
-        content: none;
-        display: none;
-    }
-}
-
-.grid {
-    display: grid;
-    grid-template-rows: masonry;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 1rem;
+	max-width: 100%;
+	height: auto;
 }
 
 ::selection {
-    background-color: var(--wp--preset--color--primary);
-    color: var(--wp--preset--color--base);
+	background-color: var(--cc-ink);
+	color: var(--cc-paper);
 }
 
-.wp-block-list {
-    padding-left: 0;
+a {
+	text-underline-offset: 0.2em;
+	text-decoration-thickness: 1px;
 }
 
-.wp-block-list li {
-    list-style-type: none;
-    display: flex;
-    flex-direction: row;
+a:hover {
+	text-decoration-thickness: 2px;
 }
 
-.wp-block-list li::before {
-    content: "·";
-    padding-right: 1rem;
+:where(a, button, input, select, textarea, summary):focus-visible {
+	outline: 3px solid var(--cc-focus);
+	outline-offset: 3px;
 }
 
-footer {
-    padding-bottom: var(--wp--style--root--padding-bottom);
-    background-color: var(--wp--preset--color--primary);
-    color: var(--wp--preset--color--base);
+.screen-reader-text {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
 }
 
-h1, body h1, :root :where(.is-layout-constrained) > h1 {
-    color: var(--wp--preset--color--secondary);
-    font-family: var(--wp--preset--font-family--manrope);
-    font-size: var(--wp--preset--font-size--17pt);
-    font-weight: 500; /* medium */
+.cc-skip-link {
+	position: absolute;
+	top: 0.5rem;
+	left: 0.5rem;
+	z-index: 1000;
+	padding: 0.75rem 1rem;
+	background: var(--cc-paper);
+	color: var(--cc-ink);
+	font-family: var(--cc-display);
+	transform: translateY(-200%);
 }
 
-h2, body h2, :root :where(.is-layout-constrained) > h2 {
-    font-family: var(--wp--preset--font-family--manrope);
-    font-size: var(--wp--preset--font-size--13pt);
-    font-weight: 500; /* medium */
+.cc-skip-link:focus {
+	transform: none;
 }
 
-/* global font family utility class names workaround */
-.has-font-family-atkinson-hyperlegible {
-    font-family: var(--wp--preset--font-family--atkinson-hyperlegible);
+/* Labels: tracked caps in the UI face */
+.cc-label {
+	font-family: var(--cc-display);
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 500;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--cc-quiet);
 }
 
-.has-font-family-markazi-text {
-    font-family: var(--wp--preset--font-family--markazi-text);
+.cc-quiet {
+	color: var(--cc-quiet);
 }
 
-.has-font-family-manrope {
-    font-family: var(--wp--preset--font-family--manrope);
+/* Archivo width axis: theme.json has no font-stretch property */
+h1, h2, h3, h4, h5, h6,
+.wp-block-heading {
+	font-stretch: 75%;
 }
 
-.--wp--preset--font-family--nunito {
-    font-family: var(--wp--preset--font-family--nunito);
+h1,
+.cc-display {
+	font-stretch: 62%;
 }
 
-.has-font-family-roboto-slab {
-    font-family: var(--wp--preset--font-family--roboto-slab);
+/* ==========================================================================
+   2. Layout: wrap, 12-column grid, index column + main
+   ========================================================================== */
+
+.cc-wrap {
+	box-sizing: border-box;
+	max-width: var(--cc-max);
+	margin-inline: auto;
+	padding-inline: var(--cc-gutter);
 }
 
-.has-font-family-roboto-slab-black {
-    font-family: var(--wp--preset--font-family--roboto-slab-black);
+.cc-grid {
+	display: grid;
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	column-gap: var(--cc-col-gap);
+	row-gap: var(--wp--preset--spacing--50);
 }
 
-.is-horizontal {
-    flex-direction: row;
-    flex-wrap: wrap;
+.cc-index {
+	grid-column: 1 / span 3;
 }
 
-.is-horizontal ul {
-    flex-direction: row;
-    display: flex;
-    gap: 1rem;
+.cc-main {
+	grid-column: 5 / span 8;
+	min-width: 0;
 }
 
-.wp-block-navigation ul li {
-    list-style: none;
-    padding: 0;
+.cc-page {
+	padding-block: var(--wp--preset--spacing--50) var(--wp--preset--spacing--70);
 }
 
-.wp-block-navigation ul li a {
-    text-decoration: none;
+/* ==========================================================================
+   3. Header
+   ========================================================================== */
+
+.cc-header {
+	padding-top: 2rem;
 }
 
-.hidden,
-.initially-hidden,
-.visually-hidden,
-.hidden-fields-container,
-.wpcf7 .hidden-fields-container {
-    display: none;
+.cc-header__bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 1rem 2rem;
 }
 
-.initially-hidden {
-    display: none;
+.cc-name {
+	display: block;
+	margin: 0;
+	color: var(--cc-ink);
+	font-family: var(--cc-display);
+	font-stretch: 62%;
+	font-weight: 300;
+	font-size: 4rem;
+	line-height: 0.9;
+	text-decoration: none;
 }
 
-.initially-hidden:target,
-.active .initially-hidden,
-.active + .initially-hidden {
-    display: block;
+.cc-name:hover {
+	color: var(--cc-ink);
 }
 
-/* more or less collapsible details block */
-details summary {
-    list-style: none;
+.cc-header--home .cc-header__bar {
+	justify-content: flex-end;
 }
 
-details summary::marker,
-details summary::-webkit-details-marker {
-    display: none;
+.cc-header--home .cc-name {
+	margin-top: 1.5rem;
+	font-size: var(--wp--preset--font-size--display);
+	line-height: 0.86;
+	letter-spacing: -0.015em;
 }
 
-::details-content {
-    transition:
-            height 2s ease,
-            max-height 2s ease,
-            opacity 2s ease,
-            content-visibility 0.5s ease allow-discrete;
-    height: 0;
-    max-height: 0;
-    overflow: clip;
-    opacity: 0;
+.cc-affiliation {
+	margin: 0 0 1.5rem;
+	font-size: 1.0625rem;
+	line-height: 1.5;
+	color: var(--cc-quiet);
 }
 
-/* Only the real open state defines expansion */
-[open]::details-content {
-    height: auto;
-    max-height: 10000px;
-    opacity: 1;
+.cc-index-link,
+.cc-affiliation--header {
+	display: none;
 }
 
-@supports (interpolate-size: allow-keywords) {
-    ::details-content,
-    [open]::details-content {
-        max-height: unset;
-    }
-    :root {
-        interpolate-size: allow-keywords;
-    }
+/* Search: bottom border only, icon button inside */
+.cc-search {
+	display: flex;
+	align-items: center;
+	width: 16.25rem;
+	max-width: 100%;
+	border-bottom: var(--cc-rule);
 }
 
-details[open] summary {
-    display: none;
+.cc-search input[type="search"] {
+	flex: 1;
+	min-width: 0;
+	padding: 0.625rem 0;
+	border: 0;
+	background: transparent;
+	color: var(--cc-ink);
+	font-family: var(--cc-display);
+	font-size: var(--wp--preset--font-size--small);
 }
 
-/* collapsing keeps layout stable but does NOT keep it expanded */
-.collapsing::details-content {
-    height: auto;
-    animation-duration: 2s;
-    animation-name: fade-out;
-    animation-fill-mode: forwards;
+.cc-search input[type="search"]::placeholder {
+	color: var(--cc-quiet);
+	opacity: 1;
 }
 
-/* optionally reuse fade-in effect for every main site content */
-/* .site-main {
-    opacity: 0;
-    animation: fade-in 1.25s ease forwards;
-} */
-
-@keyframes fade-in {
-    to { opacity: 1; }
+.cc-search button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.75rem;
+	height: 2.75rem;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--cc-ink);
+	cursor: pointer;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .site-main {
-        animation: none;
-        opacity: 1;
-    }
+/* ==========================================================================
+   4. Index navigation (after Latour, ink only)
+   ========================================================================== */
+
+.cc-index-nav ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-top: var(--cc-rule);
+	font-family: var(--cc-display);
+	font-stretch: 75%;
+	font-size: 1.375rem;
 }
 
-@keyframes fade-out {
-    from {
-        height: auto;
-        opacity: 1;
-    }
-    to {
-        height: 0;
-        opacity: 0;
-    }
+.cc-index-nav li {
+	border-bottom: var(--cc-row-rule);
+}
+
+.cc-index-nav a {
+	display: block;
+	padding: 0.5625rem 0;
+	color: var(--cc-ink);
+	text-decoration: none;
+}
+
+.cc-index-nav a:hover {
+	color: var(--cc-focus);
+}
+
+.cc-index-nav .current-menu-item > a,
+.cc-index-nav .current-menu-parent > a,
+.cc-index-nav .current_page_item > a,
+.cc-index-nav [aria-current="page"] {
+	font-weight: 600;
+}
+
+/* Sub-menus are not part of the design: show them flat and indented */
+.cc-index-nav .sub-menu {
+	border-top: var(--cc-row-rule);
+	font-size: 1.125rem;
+}
+
+.cc-index-nav .sub-menu a {
+	padding-left: 1rem;
+}
+
+.cc-index-nav .sub-menu li:last-child {
+	border-bottom: 0;
+}
+
+.cc-back {
+	margin: 1.25rem 0 0;
+	font-family: var(--cc-display);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+/* ==========================================================================
+   5. Field and printed image
+   ========================================================================== */
+
+body.has-field-sage    { --field: var(--wp--preset--color--field-sage); }
+body.has-field-stone   { --field: var(--wp--preset--color--field-stone); }
+body.has-field-lagoon  { --field: var(--wp--preset--color--field-lagoon); }
+body.has-field-rose    { --field: var(--wp--preset--color--field-rose); }
+body.has-field-apricot { --field: var(--wp--preset--color--field-apricot); }
+
+.cc-field,
+.is-style-field {
+	background-color: var(--field);
+	color: var(--cc-ink);
+	view-transition-name: field;
+}
+
+/* Only one element per page may carry a view-transition-name */
+.cc-field ~ .cc-field,
+.cc-field .cc-field {
+	view-transition-name: none;
+}
+
+/* Text on a field is always ink or ink-quiet */
+.cc-field .cc-quiet,
+.is-style-field .cc-quiet {
+	color: var(--cc-quiet);
+}
+
+/* Black-and-white artwork printed into the field (never used on covers) */
+.cc-printed,
+.is-style-printed {
+	background-color: var(--field);
+}
+
+.cc-printed img,
+.is-style-printed img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	filter: grayscale(1) contrast(1.1);
+	mix-blend-mode: multiply;
+}
+
+/* "What is this?" — caption hidden in a disclosure */
+.cc-what summary {
+	text-decoration: underline;
+	text-decoration-style: dotted;
+	text-underline-offset: 0.25em;
+	display: inline-flex;
+	align-items: center;
+	min-height: 2.75rem;
+	font-family: var(--cc-display);
+	font-size: var(--wp--preset--font-size--small);
+	cursor: pointer;
+}
+
+.cc-what p,
+.cc-what figcaption {
+	max-width: 34em;
+	margin: 0;
+	font-size: 1rem;
+	line-height: 1.5;
+	color: var(--cc-quiet);
+}
+
+/* ==========================================================================
+   6. Front page
+   ========================================================================== */
+
+.cc-hero-image {
+	height: clamp(18rem, 36vw, 28.75rem);
+}
+
+.cc-hero-image img {
+	object-position: center 28%;
+}
+
+.cc-intro {
+	max-width: 34em;
+	margin-top: var(--wp--preset--spacing--50);
+}
+
+.cc-intro > :first-child {
+	margin-top: 0;
+	font-size: var(--wp--preset--font-size--large);
+	line-height: 1.5;
+}
+
+.cc-quote-band {
+	position: relative;
+	overflow: hidden;
+}
+
+.cc-quote-band__image {
+	position: absolute;
+	inset: 0 0 0 auto;
+	width: 46%;
+}
+
+.cc-quote-band__inner {
+	position: relative;
+	padding-block: 7.5rem;
+}
+
+.cc-quote-band blockquote {
+	max-width: 15em;
+	margin: 0;
+	font-family: var(--cc-display);
+	font-stretch: 70%;
+	font-weight: 300;
+	font-size: var(--wp--preset--font-size--quote);
+	line-height: 1.05;
+}
+
+.cc-quote-band blockquote p {
+	margin: 0;
+	font: inherit;
+}
+
+.cc-quote-band__source {
+	margin: 1.5rem 0 0;
+	font-size: 1.0625rem;
+}
+
+/* Rows: year | type | title — used by "Recently" and search results */
+.cc-section {
+	padding-block: var(--wp--preset--spacing--70);
+}
+
+.cc-section__title {
+	grid-column: 1 / span 3;
+	margin: 1.125rem 0 0;
+}
+
+.cc-rows {
+	grid-column: 5 / span 8;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-top: var(--cc-rule);
+}
+
+.cc-row {
+	display: grid;
+	grid-template-columns: 5rem 8.75rem minmax(0, 1fr);
+	column-gap: var(--cc-col-gap);
+	align-items: baseline;
+	padding: 1rem 0;
+	border-bottom: var(--cc-row-rule);
+}
+
+.cc-row__title {
+	font-size: var(--wp--preset--font-size--medium);
+}
+
+/* ==========================================================================
+   7. Archive: books index
+   ========================================================================== */
+
+.cc-archive-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 2.5rem 2.5rem 2rem;
+}
+
+.cc-archive-head h1 {
+	margin: 0;
+	font-size: clamp(4rem, 8vw, 7rem);
+	line-height: 0.85;
+}
+
+.cc-archive-head p {
+	margin: 0;
+	font-size: 1.125rem;
+}
+
+.cc-sort {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 0.5rem 1rem;
+	margin: 1.25rem 0 0.5rem;
+	font-family: var(--cc-display);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.cc-sort p {
+	margin: 0;
+}
+
+.cc-sort a[aria-current="true"] {
+	text-decoration-thickness: 2px;
+	font-weight: 600;
+}
+
+.cc-book-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-top: var(--cc-rule);
+}
+
+.cc-book-row {
+	display: grid;
+	grid-template-columns: 4.5rem minmax(0, 1fr) 9.375rem 4.375rem;
+	column-gap: var(--cc-col-gap);
+	align-items: start;
+	padding: 1.125rem 0;
+	border-bottom: var(--cc-row-rule);
+}
+
+.cc-book-row__cover,
+.cc-book-row__cover img {
+	display: block;
+	width: 4.5rem;
+	aspect-ratio: 2 / 3;
+	object-fit: cover;
+}
+
+.cc-book-row__cover--empty {
+	background-color: var(--field);
+}
+
+.cc-book-row h2 {
+	margin: 0 0 0.25rem;
+	font-size: 1.75rem;
+	font-weight: 400;
+	line-height: 1.1;
+}
+
+.cc-book-row h2 a {
+	text-decoration: none;
+}
+
+.cc-book-row h2 a:hover {
+	text-decoration: underline;
+}
+
+.cc-subtitle {
+	margin: 0;
+	font-style: italic;
+	font-size: 1.0625rem;
+	line-height: 1.4;
+	color: var(--cc-quiet);
+}
+
+.cc-book-row__meta {
+	padding-top: 0.375rem;
+	font-family: var(--cc-display);
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--cc-quiet);
+}
+
+/* ==========================================================================
+   8. Single book
+   ========================================================================== */
+
+.cc-book-hero {
+	display: grid;
+	grid-template-columns: 15rem minmax(0, 1fr);
+	gap: 2.5rem;
+	align-items: end;
+	padding: 3rem;
+}
+
+.cc-book-hero figure {
+	margin: 0;
+}
+
+.cc-book-hero__cover {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.cc-book-hero__cover--empty {
+	aspect-ratio: 2 / 3;
+	outline: 1px solid var(--cc-ink);
+	outline-offset: -1px;
+}
+
+.cc-book-hero .cc-label {
+	margin: 0 0 1rem;
+	color: var(--cc-ink);
+}
+
+.cc-book-hero h1 {
+	margin: 0 0 1rem;
+	font-size: var(--wp--preset--font-size--xx-large);
+	line-height: 0.88;
+}
+
+.cc-book-hero .cc-subtitle {
+	font-size: var(--wp--preset--font-size--large);
+	line-height: 1.3;
+	color: var(--cc-ink);
+}
+
+.cc-book-body {
+	display: grid;
+	grid-template-columns: repeat(8, minmax(0, 1fr));
+	column-gap: var(--cc-col-gap);
+	row-gap: var(--wp--preset--spacing--50);
+	margin-top: var(--wp--preset--spacing--50);
+}
+
+.cc-meta {
+	grid-column: 1 / span 3;
+	margin: 0;
+	padding-top: 1rem;
+	border-top: var(--cc-rule);
+}
+
+.cc-meta dt {
+	padding-top: 0.25rem;
+	font-family: var(--cc-display);
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 500;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--cc-quiet);
+}
+
+.cc-meta dd {
+	margin: 0 0 0.75rem;
+	font-size: 1.125rem;
+}
+
+.cc-book-text {
+	grid-column: 4 / span 5;
+	padding-top: 1rem;
+	border-top: var(--cc-rule);
+}
+
+.cc-book-text > .cc-label {
+	margin: 0 0 1rem;
+}
+
+.cc-button {
+	display: inline-flex;
+	align-items: center;
+	min-height: 3rem;
+	padding: 0 1.25rem;
+	border: 1px solid var(--cc-ink);
+	color: var(--cc-ink);
+	font-family: var(--cc-display);
+	font-size: var(--wp--preset--font-size--small);
+	text-decoration: none;
+}
+
+.cc-button:hover,
+.cc-button:focus-visible {
+	background-color: var(--cc-ink);
+	color: var(--cc-paper);
+}
+
+/* Disclosures: Contents, Cite, Reviews (also Details blocks in content) */
+.cc-content .wp-block-details:not(.is-style-read-more),
+.cc-disclosure {
+	margin: 0;
+	border-top: 1px solid var(--cc-hairline);
+	border-bottom: 1px solid var(--cc-hairline);
+}
+
+.cc-content .wp-block-details:not(.is-style-read-more) + .wp-block-details,
+.cc-disclosure + .cc-disclosure,
+.cc-content .wp-block-details + .cc-disclosure {
+	border-top: 0;
+}
+
+.cc-content .wp-block-details:not(.is-style-read-more):first-of-type,
+.cc-disclosures > .cc-disclosure:first-child {
+	border-top-color: var(--cc-ink);
+}
+
+/* Generated "Cite" continues the content's Details list: no second ink rule */
+.cc-content:has(> .wp-block-details:not(.is-style-read-more):last-child) + .cc-disclosures > .cc-disclosure:first-child {
+	border-top: 0;
+}
+
+.cc-content .wp-block-details:not(.is-style-read-more) > summary,
+.cc-disclosure > summary {
+	padding: 0.875rem 0;
+	font-family: var(--cc-display);
+	font-stretch: 75%;
+	font-size: 1.5rem;
+	cursor: pointer;
+}
+
+.cc-content .wp-block-details:not(.is-style-read-more) > :not(summary),
+.cc-disclosure > :not(summary) {
+	margin-top: 0;
+	margin-bottom: 1.25rem;
+}
+
+.cc-cite {
+	font-size: 1.125rem;
+	line-height: 1.55;
+}
+
+.cc-cite pre {
+	overflow-x: auto;
+	padding: 1rem;
+	background-color: var(--field);
+	font-size: 0.875rem;
+	line-height: 1.5;
+	white-space: pre;
+}
+
+/* ==========================================================================
+   9. Running content (pages, posts, book text)
+   ========================================================================== */
+
+.cc-content {
+	max-width: 34em;
+}
+
+.cc-content > :first-child {
+	margin-top: 0;
+}
+
+.cc-content p,
+.cc-content li {
+	line-height: 1.6;
+}
+
+.cc-content .wp-block-image figcaption {
+	margin-top: 0.5rem;
+}
+
+.cc-content .wp-block-list {
+	padding-left: 1.25em;
+}
+
+.cc-page-title {
+	margin: 0 0 var(--wp--preset--spacing--50);
+	font-size: clamp(3rem, 6vw, 5rem);
+	line-height: 0.9;
+}
+
+/* Starter-template "read more" Details: opt-in via the "Read more" block style */
+.wp-block-details.is-style-read-more summary {
+	list-style: none;
+	cursor: pointer;
+}
+
+.wp-block-details.is-style-read-more summary::marker,
+.wp-block-details.is-style-read-more summary::-webkit-details-marker {
+	display: none;
+}
+
+.wp-block-details.is-style-read-more[open] summary {
+	display: none;
 }
 
 .wp-block-details-close {
-    appearance: none;
-    background: none;
-    border: none;
-    padding: 0;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    cursor: pointer;
+	appearance: none;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	text-decoration: underline;
+	cursor: pointer;
 }
 
-/* hide misleading full-site editing option ("Website bearbeiten") in admin bar */
+/* ==========================================================================
+   10. Footer
+   ========================================================================== */
 
+.cc-footer {
+	border-top: var(--cc-rule);
+}
+
+.cc-footer__inner {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 1rem 2rem;
+	padding-block: 2rem 3rem;
+	font-family: var(--cc-display);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.cc-footer p {
+	margin: 0;
+	color: var(--cc-quiet);
+}
+
+.cc-footer ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1.75rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* ==========================================================================
+   11. Motion — CSS only, never when reduced motion is requested
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+
+	/* Page-to-page: the field cross-fades into the next page's pastel */
+	@view-transition {
+		navigation: auto;
+	}
+
+	::view-transition-old(field),
+	::view-transition-new(field) {
+		animation-duration: 0.6s;
+	}
+
+	/* Artwork drifts slightly slower than the page */
+	@supports (animation-timeline: view()) {
+		.cc-hero-image img,
+		.cc-quote-band__image img {
+			height: 115%;
+			animation: cc-drift linear both;
+			animation-timeline: view();
+		}
+
+		@keyframes cc-drift {
+			from { transform: translateY(-6%); }
+			to   { transform: translateY(0); }
+		}
+	}
+}
+
+/* ==========================================================================
+   12. Small screens (≤ 820px): one column, index after main
+   ========================================================================== */
+
+@media (max-width: 51.25em) {
+	.cc-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.cc-index,
+	.cc-main,
+	.cc-section__title,
+	.cc-rows {
+		grid-column: 1 / -1;
+	}
+
+	/* Index moves below the content; the "Index" link in the header jumps to it */
+	.cc-index {
+		order: 2;
+	}
+
+	.cc-header {
+		padding-top: 0;
+	}
+
+	/* Top bar: "Index" link | search, one continuous rule; the name below */
+	.cc-header__bar,
+	.cc-header--home .cc-header__bar {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		gap: 0;
+		align-items: stretch;
+	}
+
+	.cc-index-link {
+		display: inline-flex;
+		align-items: center;
+		min-height: 3rem;
+		padding-right: 1rem;
+		border-bottom: var(--cc-rule);
+		color: var(--cc-ink);
+		font-family: var(--cc-display);
+		font-stretch: 75%;
+		font-size: 1.25rem;
+		text-decoration: none;
+	}
+
+	.cc-search {
+		width: auto;
+		justify-content: flex-end;
+	}
+
+	.cc-search input[type="search"] {
+		text-align: right;
+	}
+
+	.cc-header__bar .cc-name {
+		grid-column: 1 / -1;
+		grid-row: 2;
+	}
+
+	.cc-name {
+		margin-top: 1.5rem;
+		font-size: 3rem;
+	}
+
+	.cc-header--home .cc-name {
+		font-size: clamp(4rem, 21vw, 5.25rem);
+	}
+
+	.cc-index-nav ul {
+		font-size: 1.5rem;
+	}
+
+	.cc-index-nav a {
+		padding-block: 0.75rem;
+	}
+
+	/* Affiliation sits under the name on small screens, not in the index */
+	.cc-affiliation--header {
+		display: block;
+		margin: 1rem 0 0;
+	}
+
+	.cc-index .cc-affiliation {
+		display: none;
+	}
+
+	.cc-quote-band__image {
+		position: relative;
+		width: auto;
+		height: 11.25rem;
+	}
+
+	.cc-quote-band__inner {
+		padding-block: 2rem 2.5rem;
+	}
+
+	.cc-row {
+		grid-template-columns: 3.5rem minmax(0, 1fr);
+		column-gap: 0.75rem;
+	}
+
+	.cc-row__type {
+		grid-column: 2;
+	}
+
+	.cc-row__title {
+		grid-column: 2;
+	}
+
+	.cc-archive-head {
+		padding: 1.5rem 1rem;
+	}
+
+	.cc-book-row {
+		grid-template-columns: 4rem minmax(0, 1fr);
+		column-gap: 1rem;
+	}
+
+	.cc-book-row__cover,
+	.cc-book-row__cover img {
+		width: 4rem;
+	}
+
+	.cc-book-row__meta {
+		grid-column: 2;
+		padding-top: 0;
+	}
+
+	.cc-book-hero {
+		grid-template-columns: minmax(0, 1fr);
+		padding: 1.5rem;
+	}
+
+	.cc-book-hero figure {
+		max-width: 12rem;
+	}
+
+	.cc-book-body {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.cc-meta,
+	.cc-book-text {
+		grid-column: 1 / -1;
+	}
+}
+
+/* ==========================================================================
+   13. Admin conveniences (kept from the starter template)
+   ========================================================================== */
+
+/* hide misleading full-site editing option in the admin bar */
 #wp-admin-bar-site-editor {
-    display: none;
+	display: none;
 }
 
 /* facilitate preview and testing */
-
 #wpadminbar {
-    opacity: 0.25;
-    z-index: -1;
-    transition: opacity 0.5s ease;
+	opacity: 0.25;
+	transition: opacity 0.5s ease;
 }
 
-#wpadminbar:hover {
-    opacity: 1;
-    z-index: 100;
+#wpadminbar:hover,
+#wpadminbar:focus-within {
+	opacity: 1;
 }

@@ -1,45 +1,41 @@
 /** This preview file is NOT used in the frontend!
-    You can use it to expose theme.json colors and settings
-    redundantly for better preview, autocompletion and to prevent unresolved var() errors at development time
+    It mirrors theme.json presets for IDE autocompletion and to avoid
+    unresolved var() warnings at development time. Keep in sync with theme.json.
+    Design rationale: DESIGN.md §2–4. Rejected colours (wine, gold) must not return.
  */
 
 :root {
-    --wp--preset--color--base: #fafafa; /* book cover artwork lightest */
-    --wp--preset--color--primary: #232227; /* book cover dark drawing */
-    --wp--preset--color--secondary: #aa273d; /* ed */
-    --wp--preset--color--tertiary: #CC6600; /* Sedona Tenné Tawny */
-    --wp--preset--color--contrast: #364976; /* Birkbeck academy blue */
-    --color-bloodred: #5f0005; /*  book cover art: Bios Politikos */
-    --color-darkpurple: #4d2432; /*  book cover Peter Lang series */
-    --color-light: #dbbe84; /*  book cover text */
-    --wp--preset--color--black: #000000;
-    --color-beigelatour: #969183;
-    --color-bluelatour: #026576;
-    --color-backdropdelatour: #dedfc8;
-    --color-redpurpledelatour: #d01f51;
+    /* Ink and ground */
+    --wp--preset--color--contrast: #1E1E1C;        /* Ink: all text, links, rules */
+    --wp--preset--color--contrast-quiet: #55544E;  /* Ink, quiet: metadata (≥5.18:1 on every field) */
+    --wp--preset--color--base: #FFFFFF;            /* White ground */
+    --wp--preset--color--hairline: #CFCDC6;        /* decorative row rules only */
+    --wp--preset--color--focus: #026576;           /* focus ring + link hover only */
 
-    /* Adjust the colors above to the theme.json palette for a proper editor preview!
-     * Auto-generated class names follow the pattern .has-{preset-slug}-{preset-category}
-     * e.g.
-    */
+    /* Fields: backgrounds only, never text (after the Latour palette) */
+    --wp--preset--color--field-sage: #DEDFC8;
+    --wp--preset--color--field-stone: #DAD5C8;
+    --wp--preset--color--field-lagoon: #CFDFDD;
+    --wp--preset--color--field-rose: #EED6DB;
+    --wp--preset--color--field-apricot: #F1DCC4;
 
-    .has-base-color {
-        color: var(--wp--preset--color--base);
-    }
+    --wp--preset--font-family--display: Archivo, system-ui, sans-serif;
+    --wp--preset--font-family--body: Spectral, Georgia, serif;
 
-    /* You might use arbitrary values below just to ensure the properties are not undefined */
+    --wp--preset--font-size--x-small: 0.8125rem;
+    --wp--preset--font-size--small: 0.9375rem;
+    --wp--preset--font-size--medium: 1.25rem;
+    --wp--preset--font-size--large: 1.5rem;
+    --wp--preset--font-size--x-large: 2.25rem;
+    --wp--preset--font-size--quote: 3.375rem;
+    --wp--preset--font-size--xx-large: 6rem;
+    --wp--preset--font-size--display: 10.5rem;
 
-    --wp--preset--font-family--lato: Lato, sans-serif;
-
-    --wp--style--root--padding-top: 1rem;
-    --wp--style--root--padding-bottom: 1rem;
-    --wp--preset--font-size--small: small;
-    --wp--preset--font-size--medium: medium;
-    --wp--preset--font-size--large: large;
-    --wp--preset--spacing--30: 2rem;
-    --wp--preset--spacing--40: 3rem;
-    --wp--preset--spacing--50: 4.5rem;
-    --wp--preset--spacing--60: 7rem;
-    --wp--preset--spacing--70: 8rem;
-    --wp--preset--spacing--80: 11rem;
+    --wp--preset--spacing--20: 0.5rem;
+    --wp--preset--spacing--30: 1rem;
+    --wp--preset--spacing--40: 1.5rem;
+    --wp--preset--spacing--50: 2.5rem;
+    --wp--preset--spacing--60: 4rem;
+    --wp--preset--spacing--70: 6.5rem;
+    --wp--preset--spacing--80: 2.5rem; /* page gutter, clamp(1rem, 4vw, 2.5rem) */
 }
