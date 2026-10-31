@@ -6,7 +6,7 @@ Comment: ^ do NOT rename the Text Domain! (This line should be removed)
 Template: twentytwentyfive
 Author: @openmindculture
 Author URI: https://www.ingo-steinke.de/
-Description: Twenty Twenty-Five Child supports the WordPress template engine (theme.json) and Gutenberg block editor
+Description: WordPress theme for professor Claudio Canaparo
 Requires at least: 6.1
 Tested up to: 7.1
 Requires PHP: 7.4
@@ -14,496 +14,226 @@ Version: 0.0.1
 License: proprietary
 */
 
-/* DON'T enable W3 Total Cache CSS minify when using @import here! */
-@import url("blocks/custom-card/custom-card.css");
-
 :root {
-    --wp--preset--font-size--small: 1.5625rem;
-    --wp--preset--font-size--subline: 1.8594rem;
-    --wp--preset--font-size--large: 2.625rem;
-    /* adaptive header sizes see below */
-    --wp--style--global--content-size: 784px;
-    --wp--style--global--wide-size: 1024px;
+    --cc-tile-w: 140px;
+    --cc-tile-h: 168px;
+    --cc-progress: 1; /* 1 = settled; js/script.js sets 0–1 inline on each .is-style-window */
 }
 
-html {
-    /* iOS Safari font size workaround */
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-    font-size: 16px;
+/* ==========================================================================
+   1. Base details theme.json has no property for
+   ========================================================================== */
+
+a {
+    text-underline-offset: 0.18em;
+    text-decoration-thickness: 1px;
 }
 
-body, p {
-    background-color: var(--wp--preset--color--base);
-    color: var(--wp--preset--color--contrast);
-    font-family: var(--wp--preset--font-family--manrope);
-    font-size: var(--wp--preset--font-size--small);
-    font-weight: 400; /* 400 regular normal */
+a:hover {
+    text-decoration-thickness: 2px;
 }
 
-b, strong {
-    color: var(--wp--preset--color--primary);
-    font-weight: 600; /* semibold */
+:where(a, button, input, select, textarea, summary):focus-visible {
+    outline: 2px solid var(--wp--preset--color--contrast);
+    outline-offset: 3px;
 }
 
-body {
-    display: flex;
-    /* keep footer visible at the bottom (adjust to heights and spacing) */
-    min-height: calc(100vh - 3rem);
-    flex-direction: column;
+/* White focus ring wherever the teal background preset is used (6.7:1) */
+.has-accent-background-color :focus-visible {
+    outline-color: var(--wp--preset--color--base);
 }
 
-main {
-    flex: 1;
-}
-
-main,
-.site-header-inner,
-.site-footer-inner,
-.alignwide {
-    max-width: 992px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* ensure layout for pages with little content */
-main,
-main .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
-.editor-styles-wrapper > .is-root-container.is-layout-constrained.block-editor-block-list__layout {
-    min-width: min(calc(100vw - 2rem), 992px);
-}
-
-img {
-    max-width: 992px;
-    height: auto;
-}
-
-@media (max-width: 992px) {
-    img {
-        max-width: 100%;
-    }
-
-    .wp-block-image img {
-        width: 100%;
-    }
-
-    body {
-        max-width: 100%;
-        overflow-x: hidden;
-        overflow-wrap: break-word;
-    }
-
-    main {
-        max-width: calc(100% - 2rem);
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    header .site-navigation-menu-link {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-    }
-
-    header .navigation-menu {
-        display: none;
-    }
-
-    header .navigation-menu.active,
-    header .navigation-menu:target {
-        display: block;
-    }
-
-    header .navigation-menu:target + .site-navigation-menu-link {
-        display: none;
-    }
-
-    header nav {
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 1rem;
-        background-color: var(--wp--preset--color--base);
-        z-index: 1;
-    }
-
-    header nav ul {
-        flex-direction: column;
-    }
-
-    header .site-navigation-menu-close {
-        font-size: 2rem;
-        text-decoration: none;
-        position: absolute;
-        right: 1rem;
-    }
-}
-
-@media (min-width: 993px) {
-    header .site-navigation-menu-close,
-    header .site-navigation-menu-link {
-        display: none;
-    }
-
-    header .site-header-row .site-navigation {
-        flex-basis: 100%;
-    }
-
-    header .site-navigation-menu-link {
-        display: none;
-    }
-}
-
-body.is-menu-open {
-    position: fixed;
-}
-
-body > .wp-site-blocks {
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-header,
-.wp-site-blocks header {
-    padding-top: var(--wp--style--root--padding-top);
-    background-color: var(--wp--preset--color--base);
-    color: var(--wp--preset--color--primary);
-}
-
-.site-header-color {
-    background-color: var(--wp--preset--color--secondary);
-    color: var(--wp--preset--color--base);
-    margin-top: 1rem;
-}
-
-.site-header-color,
-.site-header-color .site-header-inner,
-.site-header-color .site-header-inner .site-header-row {
-    color: var(--wp--preset--color--base);
-}
-
-.site-header-color .image-wrap {
-    background-color: var(--wp--preset--color--base);
-    margin-top: -2rem;
-}
-
-.site-title,
-.wp-block-site-title {
-    color: var(--wp--preset--color--primary);
-}
-
-.site-logo {
-    height: 100px;
-    width: auto;
-}
-
-header .site-header-row.is-layout-flex {
-    flex-wrap: nowrap;
-}
-
-header nav ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-header nav ul li {
-    position: relative;
-}
-
-nav ul li {
-    position: relative;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: currentColor;
-    padding: 1rem;
-    display: block;
-}
-
-nav ul li a:hover {
-    text-decoration: underline;
-}
-
-header nav > ul > li:hover,
-header nav > ul > li:hover > a,
-header nav > ul > li:focus,
-header nav > ul > li:focus > a,
-header nav ul li ul li:hover,
-header nav ul li ul li:hover a,
-header nav ul li ul li:focus,
-header nav ul li ul li:focus a {
-    background-color: var(--wp--preset--color--primary);
-    color: var(--wp--preset--color--base);
-    text-decoration: none;
-}
-
-/* Dropdown styles */
-nav ul ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    flex-direction: column;
-    background: var(--wp--preset--color--base);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    min-width: 200px;
-    z-index: 1000;
-    padding: 0.5rem 0 0.5rem 0;
-    gap: 0;
-}
-
-nav ul li:hover > ul,
-nav ul li:focus-within > ul {
-    display: flex;
-}
-
-nav ul ul li {
-    width: 100%;
-}
-
-/* Dropdown indicator */
-nav ul li.page_item_has_children > a::after {
-    content: " ▾";
-    font-size: 0.8em;
-    margin-left: 0.5rem;
-}
-
-@media (max-width: 992px) {
-    nav {
-        min-height: 100%;
-    }
-
-    nav ul ul {
-        position: relative;
-        display: block;
-        box-shadow: none;
-    }
-
-    nav ul li.page_item_has_children > a::after {
-        content: none;
-        display: none;
-    }
-}
-
-.grid {
-    display: grid;
-    grid-template-rows: masonry;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 1rem;
-}
-
-::selection {
-    background-color: var(--wp--preset--color--primary);
-    color: var(--wp--preset--color--base);
-}
-
-.wp-block-list {
-    padding-left: 0;
-}
-
-.wp-block-list li {
-    list-style-type: none;
-    display: flex;
-    flex-direction: row;
-}
-
-.wp-block-list li::before {
-    content: "·";
-    padding-right: 1rem;
-}
-
-footer {
-    padding-bottom: var(--wp--style--root--padding-bottom);
-    background-color: var(--wp--preset--color--primary);
-    color: var(--wp--preset--color--base);
-}
-
-h1, body h1, :root :where(.is-layout-constrained) > h1 {
-    color: var(--wp--preset--color--secondary);
-    font-family: var(--wp--preset--font-family--manrope);
-    font-size: var(--wp--preset--font-size--17pt);
-    font-weight: 500; /* medium */
-}
-
-h2, body h2, :root :where(.is-layout-constrained) > h2 {
-    font-family: var(--wp--preset--font-family--manrope);
-    font-size: var(--wp--preset--font-size--13pt);
-    font-weight: 500; /* medium */
-}
-
-/* global font family utility class names workaround */
-.has-font-family-atkinson-hyperlegible {
-    font-family: var(--wp--preset--font-family--atkinson-hyperlegible);
-}
-
-.has-font-family-markazi-text {
-    font-family: var(--wp--preset--font-family--markazi-text);
-}
-
-.has-font-family-manrope {
-    font-family: var(--wp--preset--font-family--manrope);
-}
-
-.--wp--preset--font-family--nunito {
-    font-family: var(--wp--preset--font-family--nunito);
-}
-
-.has-font-family-roboto-slab {
-    font-family: var(--wp--preset--font-family--roboto-slab);
-}
-
-.has-font-family-roboto-slab-black {
-    font-family: var(--wp--preset--font-family--roboto-slab-black);
-}
-
-.is-horizontal {
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.is-horizontal ul {
-    flex-direction: row;
-    display: flex;
-    gap: 1rem;
-}
-
-.wp-block-navigation ul li {
-    list-style: none;
-    padding: 0;
-}
-
-.wp-block-navigation ul li a {
-    text-decoration: none;
-}
-
-.hidden,
-.initially-hidden,
-.visually-hidden,
-.hidden-fields-container,
-.wpcf7 .hidden-fields-container {
-    display: none;
-}
-
-.initially-hidden {
-    display: none;
-}
-
-.initially-hidden:target,
-.active .initially-hidden,
-.active + .initially-hidden {
-    display: block;
-}
-
-/* more or less collapsible details block */
-details summary {
-    list-style: none;
-}
-
-details summary::marker,
-details summary::-webkit-details-marker {
-    display: none;
-}
-
-::details-content {
-    transition:
-            height 2s ease,
-            max-height 2s ease,
-            opacity 2s ease,
-            content-visibility 0.5s ease allow-discrete;
-    height: 0;
-    max-height: 0;
-    overflow: clip;
-    opacity: 0;
-}
-
-/* Only the real open state defines expansion */
-[open]::details-content {
-    height: auto;
-    max-height: 10000px;
-    opacity: 1;
-}
-
-@supports (interpolate-size: allow-keywords) {
-    ::details-content,
-    [open]::details-content {
-        max-height: unset;
-    }
-    :root {
-        interpolate-size: allow-keywords;
-    }
-}
-
-details[open] summary {
-    display: none;
-}
-
-/* collapsing keeps layout stable but does NOT keep it expanded */
-.collapsing::details-content {
-    height: auto;
-    animation-duration: 2s;
-    animation-name: fade-out;
-    animation-fill-mode: forwards;
-}
-
-/* optionally reuse fade-in effect for every main site content */
-/* .site-main {
-    opacity: 0;
-    animation: fade-in 1.25s ease forwards;
-} */
-
-@keyframes fade-in {
-    to { opacity: 1; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .site-main {
-        animation: none;
-        opacity: 1;
-    }
-}
-
-@keyframes fade-out {
-    from {
-        height: auto;
-        opacity: 1;
-    }
-    to {
-        height: 0;
-        opacity: 0;
-    }
-}
-
-.wp-block-details-close {
-    appearance: none;
-    background: none;
-    border: none;
-    padding: 0;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
+.wp-block-details summary {
+    padding-block: 1rem;
+    font-family: var(--wp--preset--font-family--heading);
+    font-size: var(--wp--preset--font-size--large);
+    font-weight: 600;
     cursor: pointer;
 }
 
-/* hide misleading full-site editing option ("Website bearbeiten") in admin bar */
+/* ==========================================================================
+   2. Header (parts/header.html): the Site Logo is the portrait tile and
+   overlaps the teal band below it.
+   ========================================================================== */
 
-#wp-admin-bar-site-editor {
+header.wp-block-template-part .wp-block-group:has(> .wp-block-site-logo) {
+    position: relative;
+    padding-inline-start: calc(var(--cc-tile-w) + 2.5rem);
+}
+
+header.wp-block-template-part .wp-block-site-logo {
+    position: absolute;
+    inset-block-start: 1.5rem;
+    inset-inline-start: 0;
+    z-index: 2;
+    width: var(--cc-tile-w);
+    height: var(--cc-tile-h);
+    margin: 0;
+    background-color: var(--wp--preset--color--accent-tint);
+}
+
+header.wp-block-template-part .wp-block-site-logo :is(a, img) {
+    display: block;
+    width: 100% !important; /* the block writes its width attribute inline */
+    height: 100%;
+    object-fit: cover;
+}
+
+header.wp-block-template-part .wp-block-search {
+    flex: 1 1 16rem;
+    min-width: 0;
+    max-width: 20rem;
+}
+
+header.wp-block-template-part .wp-block-search__inside-wrapper,
+header.wp-block-template-part .wp-block-search__input {
+    min-width: 0;
+    min-height: 44px;
+}
+
+/* Navigation in the band */
+header.wp-block-template-part nav.wp-block-navigation {
+    box-sizing: border-box;
+    padding-inline-start: calc(var(--cc-tile-w) + 1.5rem);
+}
+
+header.wp-block-template-part .wp-block-navigation__container {
+    gap: 0; /* without JavaScript the links wrap onto a second line */
+}
+
+header.wp-block-template-part .wp-block-navigation-item__content {
+    padding: 0.875rem 1rem;
+    white-space: nowrap;
+}
+
+header.wp-block-template-part .wp-block-navigation-item__content:hover,
+header.wp-block-template-part .wp-block-navigation-item__content[aria-current="page"] {
+    background-color: var(--wp--preset--color--accent-deep);
+}
+
+header.wp-block-template-part .wp-block-navigation-item__content:focus-visible {
+    outline-offset: -4px;
+}
+
+/*
+ * Menu button only when the links don't fit. Navigation → Overlay menu: "Mobile";
+ * these rules replace core's fixed 600 px breakpoint with the measured state.
+ */
+header.wp-block-template-part .wp-block-navigation.cc-nav--measuring .wp-block-navigation__container {
+    flex-wrap: nowrap;
+}
+
+header.wp-block-template-part .wp-block-navigation:not(.cc-nav--collapsed) .wp-block-navigation__responsive-container-open:not(.always-shown) {
     display: none;
 }
 
-/* facilitate preview and testing */
-
-#wpadminbar {
-    opacity: 0.25;
-    z-index: -1;
-    transition: opacity 0.5s ease;
+header.wp-block-template-part .wp-block-navigation:not(.cc-nav--collapsed) .wp-block-navigation__responsive-container:not(.hidden-by-default):not(.is-menu-open) {
+    position: relative;
+    z-index: auto;
+    display: block;
+    width: 100%;
+    background-color: inherit;
+    color: inherit;
 }
 
-#wpadminbar:hover {
-    opacity: 1;
-    z-index: 100;
+header.wp-block-template-part .wp-block-navigation:not(.cc-nav--collapsed) .wp-block-navigation__responsive-container:not(.is-menu-open) .wp-block-navigation__responsive-container-close {
+    display: none;
+}
+
+header.wp-block-template-part .wp-block-navigation.cc-nav--collapsed {
+    justify-content: flex-end;
+}
+
+header.wp-block-template-part .wp-block-navigation.cc-nav--collapsed .wp-block-navigation__responsive-container-open {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    min-height: 48px;
+}
+
+header.wp-block-template-part .wp-block-navigation.cc-nav--collapsed .wp-block-navigation__responsive-container:not(.is-menu-open) {
+    display: none;
+}
+
+/* Open overlay (colours come from the block's overlay colour attributes) */
+header.wp-block-template-part .wp-block-navigation__responsive-container.is-menu-open {
+    padding: var(--wp--preset--spacing--50) var(--wp--preset--spacing--80);
+}
+
+header.wp-block-template-part .is-menu-open .wp-block-navigation__responsive-container-content,
+header.wp-block-template-part .is-menu-open .wp-block-navigation__container {
+    align-items: stretch;
+    gap: 0;
+}
+
+header.wp-block-template-part .is-menu-open .wp-block-navigation-item,
+header.wp-block-template-part .is-menu-open .wp-block-navigation-item__content {
+    align-self: stretch;
+}
+
+header.wp-block-template-part .is-menu-open .wp-block-navigation-item__content {
+    padding: 1rem 0;
+    border-bottom: 1px solid color-mix(in srgb, currentcolor 25%, transparent);
+    font-size: var(--wp--preset--font-size--large);
+}
+
+header.wp-block-template-part .is-menu-open .wp-block-navigation-item__content:hover,
+header.wp-block-template-part .is-menu-open .wp-block-navigation-item__content[aria-current="page"] {
+    background-color: transparent;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+@media (max-width: 47.5em) {
+    :root {
+        --cc-tile-w: 64px;
+        --cc-tile-h: 78px;
+    }
+
+    header.wp-block-template-part .wp-block-group:has(> .wp-block-site-logo) {
+        padding-inline-start: calc(var(--cc-tile-w) + 1rem);
+    }
+
+    header.wp-block-template-part .wp-block-site-logo {
+        inset-block-start: 1.25rem;
+    }
+
+    header.wp-block-template-part nav.wp-block-navigation {
+        padding-inline-start: calc(var(--cc-tile-w) + 1rem);
+    }
+}
+
+/* ==========================================================================
+   3. Block style "Window": the picture drifts inside a fixed frame.
+   --cc-progress runs 0 → 1 from "entering the viewport" to "centred".
+   ========================================================================== */
+
+.wp-block-cover.is-style-window {
+    overflow: hidden;
+}
+
+.wp-block-cover.is-style-window .wp-block-cover__image-background {
+    height: 106%; /* 6% of the frame in reserve */
+    transform: translate3d(0, calc((1 - var(--cc-progress)) * -5.66%), 0);
+    will-change: transform;
+}
+
+.wp-block-image.is-style-window img {
+    width: 100%;
+    height: clamp(16rem, 10rem + 24vw, 27.5rem);
+    object-fit: cover;
+    object-position: 50% calc(35% + var(--cc-progress) * 15%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wp-block-cover.is-style-window .wp-block-cover__image-background {
+        height: 100%;
+        transform: none;
+        will-change: auto;
+    }
+
+    .wp-block-image.is-style-window img {
+        object-position: 50% 50%;
+    }
 }

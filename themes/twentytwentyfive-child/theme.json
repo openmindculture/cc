@@ -3,326 +3,556 @@
 	"version": 3,
 	"settings": {
 		"appearanceTools": true,
+		"useRootPaddingAwareAlignments": true,
 		"color": {
+			"defaultPalette": false,
+			"defaultGradients": false,
+			"defaultDuotone": false,
+			"custom": false,
+			"customGradient": false,
+			"customDuotone": false,
+			"gradients": [],
+			"duotone": [],
 			"palette": [
 				{
-					"color": "#fafafa",
-					"name": "Base (off-white)",
-					"slug": "base"
+					"slug": "base",
+					"name": "White",
+					"color": "#FFFFFF"
 				},
 				{
-					"color": "#364976",
-					"name": "Contrast (academy blue)",
-					"slug": "contrast"
+					"slug": "contrast",
+					"name": "Ink",
+					"color": "#16191D"
 				},
 				{
-					"color": "#232227",
-					"name": "Primary",
-					"slug": "primary"
+					"slug": "contrast-quiet",
+					"name": "Ink, quiet",
+					"color": "#5A6066"
 				},
 				{
-					"color": "#aa273d",
-					"name": "Secondary",
-					"slug": "secondary"
+					"slug": "accent",
+					"name": "Teal",
+					"color": "#026576"
 				},
 				{
-					"color": "#CC6600",
-					"name": "Tertiary",
-					"slug": "tertiary"
+					"slug": "accent-deep",
+					"name": "Deep teal",
+					"color": "#014652"
 				},
 				{
-					"color": "#030f63",
-					"name": "dark midnight blue",
-					"slug": "dark-midnight-blue"
+					"slug": "accent-tint",
+					"name": "Teal tint",
+					"color": "#E6F0EF"
 				},
 				{
-					"color": "#191970",
-					"name": "midnight blue",
-					"slug": "midnight-blue"
-				},
-				{
-					"color": "#4b8402",
-					"name": "soft grass green",
-					"slug": "soft-grass-green"
-				},
-				{
-					"color": "#e50691",
-					"name": "dark deep pink",
-					"slug": "dark-deep-pink"
-				},
-				{
-					"color": "#b80122",
-					"name": "pinkish red alert",
-					"slug": "pinkish-red-alert"
-				},
-				{
-					"color": "#ffc0cb",
-					"name": "pale pink",
-					"slug": "pale-pink"
-				},
-				{
-					"color": "#ffe8b7",
-					"name": "sandy yellow",
-					"slug": "sandy-yellow"
+					"slug": "line",
+					"name": "Line (decorative)",
+					"color": "#E3E6E8"
 				}
-			],
-			"customDuotone": false,
-			"customGradient": false,
-			"defaultGradients": false,
-			"defaultPalette": false,
-			"duotone": [],
-			"gradients": []
+			]
 		},
 		"layout": {
-			"contentSize": "650px",
-			"wideSize": "1200px"
+			"contentSize": "40rem",
+			"wideSize": "75rem"
 		},
 		"spacing": {
 			"spacingScale": {
 				"steps": 0
 			},
-			"spacingSizes": [
-				{
-					"size": "clamp(1.5rem, 5vw, 2rem)",
-					"slug": "30",
-					"name": "1"
-				},
-				{
-					"size": "clamp(1.8rem, 1.8rem + ((1vw - 0.48rem) * 2.885), 3rem)",
-					"slug": "40",
-					"name": "2"
-				},
-				{
-					"size": "clamp(2.5rem, 8vw, 4.5rem)",
-					"slug": "50",
-					"name": "3"
-				},
-				{
-					"size": "clamp(3.75rem, 10vw, 7rem)",
-					"slug": "60",
-					"name": "4"
-				},
-				{
-					"size": "clamp(5rem, 5.25rem + ((1vw - 0.48rem) * 9.096), 8rem)",
-					"slug": "70",
-					"name": "5"
-				},
-				{
-					"size": "clamp(7rem, 14vw, 11rem)",
-					"slug": "80",
-					"name": "6"
-				}
-			],
 			"units": [
-				"%",
 				"px",
 				"em",
 				"rem",
-				"vh",
-				"vw"
+				"%",
+				"vw",
+				"vh"
+			],
+			"spacingSizes": [
+				{
+					"slug": "20",
+					"name": "8",
+					"size": "0.5rem"
+				},
+				{
+					"slug": "30",
+					"name": "16",
+					"size": "1rem"
+				},
+				{
+					"slug": "40",
+					"name": "24",
+					"size": "1.5rem"
+				},
+				{
+					"slug": "50",
+					"name": "40",
+					"size": "clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem)"
+				},
+				{
+					"slug": "60",
+					"name": "64",
+					"size": "clamp(2.5rem, 1.9rem + 2.7vw, 4rem)"
+				},
+				{
+					"slug": "70",
+					"name": "104",
+					"size": "clamp(4rem, 3rem + 4.5vw, 6.5rem)"
+				},
+				{
+					"slug": "80",
+					"name": "Page gutter",
+					"size": "clamp(1rem, 4vw, 2.5rem)"
+				}
 			]
 		},
 		"typography": {
 			"dropCap": false,
 			"fluid": true,
+			"customFontSize": false,
+			"letterSpacing": false,
+			"textTransform": false,
 			"fontFamilies": [
 				{
+					"slug": "heading",
+					"name": "Schibsted Grotesk",
+					"fontFamily": "\"Schibsted Grotesk\", system-ui, sans-serif",
 					"fontFace": [
 						{
-							"fontFamily": "Atkinson Hyperlegible",
-							"fontStretch": "normal",
+							"fontFamily": "Schibsted Grotesk",
 							"fontStyle": "normal",
-							"fontWeight": "700",
+							"fontWeight": "400",
+							"fontDisplay": "swap",
 							"src": [
-								"file:./fonts/atkinson-Hyperlegible-Bold-102a.woff2"
+								"file:./fonts/schibsted-grotesk-v7-latin_latin-ext-regular.woff2"
 							]
 						},
 						{
-							"fontFamily": "Atkinson Hyperlegible",
-							"fontStretch": "normal",
-							"fontStyle": "italic",
-							"fontWeight": "700",
-							"src": [
-								"file:./fonts/atkinson-Hyperlegible-BoldItalic-102a.woff2"
-							]
-						},
-						{
-							"fontFamily": "Atkinson Hyperlegible",
-							"fontStretch": "normal",
+							"fontFamily": "Schibsted Grotesk",
 							"fontStyle": "italic",
 							"fontWeight": "400",
+							"fontDisplay": "swap",
 							"src": [
-								"file:./fonts/atkinson-Hyperlegible-Italic-102a.woff2"
+								"file:./fonts/schibsted-grotesk-v7-latin_latin-ext-italic.woff2"
 							]
 						},
 						{
-							"fontFamily": "Atkinson Hyperlegible",
-							"fontStretch": "normal",
-							"fontStyle": "normal",
-							"fontWeight": "400",
-							"src": [
-								"file:./fonts/atkinson-Hyperlegible-Regular-102a.woff2"
-							]
-						}
-					],
-					"fontFamily": "\"Atkinson Hyperlegible\", sans-serif",
-					"name": "Atkinson Hyperlegible",
-					"slug": "atkinson-hyperlegible"
-				},
-
-				{
-					"fontFace": [
-						{
-							"fontFamily": "Markazi Text",
-							"fontStretch": "normal",
+							"fontFamily": "Schibsted Grotesk",
 							"fontStyle": "normal",
 							"fontWeight": "700",
+							"fontDisplay": "swap",
 							"src": [
-								"file:./fonts/markazi-text-v28-arabic_latin_latin-ext-700.woff2"
+								"file:./fonts/schibsted-grotesk-v7-latin_latin-ext-700.woff2"
 							]
 						},
 						{
-							"fontFamily": "Markazi Text",
-							"fontStretch": "normal",
-							"fontStyle": "normal",
-							"fontWeight": "400",
-							"src": [
-								"file:./fonts/markazi-text-v28-arabic_latin_latin-ext-regular.woff2"
-							]
-						}
-					],
-					"fontFamily": "\"Markazi Text\", serif",
-					"name": "Markazi Text",
-					"slug": "markazi-text"
-				},
-
-				{
-					"fontFace": [
-						{
-							"fontFamily": "Manrope",
-							"fontStyle": "auto",
-							"fontWeight": "300 900",
-							"fontVariationSettings": "'MONO' 0, 'CRSV' 0, 'CASL' 0, 'slnt' 0",
-							"src": [
-								"file:./fonts/manrope-v20-cyrillic_latin_latin-ext-regular.woff2"
-							]
-						},
-						{
-							"fontFamily": "Manrope",
+							"fontFamily": "Schibsted Grotesk",
 							"fontStyle": "italic",
-							"fontWeight": "300 900",
-							"fontVariationSettings": "'MONO' 0, 'CRSV' 0, 'CASL' 0, 'slnt' -14",
+							"fontWeight": "700",
+							"fontDisplay": "swap",
 							"src": [
-								"file:./fonts/manrope-v20-cyrillic_latin_latin-ext-regular.woff2"
+								"file:./fonts/schibsted-grotesk-v7-latin_latin-ext-700italic.woff2"
 							]
 						}
-					],
-					"fontFamily": "\"Manrope\", sans-serif",
-					"name": "Manrope (Variable)",
-					"slug": "manrope"
+					]
 				},
-
 				{
+					"slug": "body",
+					"name": "Source Serif 4",
+					"fontFamily": "\"Source Serif 4\", Georgia, serif",
 					"fontFace": [
 						{
-							"fontFamily": "Nunito",
-							"fontStretch": "normal",
-							"fontStyle": "normal",
-							"fontWeight": "300",
-							"src": [
-								"file:./fonts/nunito-v26-latin-300.woff2"
-							]
-						},
-						{
-							"fontFamily": "Nunito",
-							"fontStretch": "normal",
-							"fontStyle": "normal",
-							"fontWeight": "700",
-							"src": [
-								"file:./fonts/nunito-v26-latin-700.woff2"
-							]
-						}
-					],
-					"fontFamily": "\"Nunito\", \"Avenir\", \"Futura\", \"Helvetica\", sans-serif",
-					"name": "Nunito",
-					"slug": "nunito"
-				},
-
-				{
-					"fontFace": [
-						{
-							"fontFamily": "Roboto Slab",
-							"fontStretch": "normal",
-							"fontStyle": "normal",
-							"fontWeight": "700",
-							"src": [
-								"file:./fonts/roboto-slab-v34-latin_latin-ext-700.woff2"
-							]
-						},
-						{
-							"fontFamily": "Roboto Slab",
-							"fontStretch": "normal",
+							"fontFamily": "Source Serif 4",
 							"fontStyle": "normal",
 							"fontWeight": "400",
+							"fontDisplay": "swap",
 							"src": [
-								"file:./fonts/roboto-slab-v34-latin_latin-ext-regular.woff2"
+								"file:./fonts/source-serif-4-v15-latin_latin-ext-regular.woff2"
 							]
-						}
-					],
-					"fontFamily": "\"Roboto Slab\", sans-serif",
-					"name": "Roboto Slab",
-					"slug": "roboto-slab"
-				},
-
-				{
-					"fontFace": [
+						},
 						{
-							"fontFamily": "Roboto Slab Black",
-							"fontStretch": "normal",
-							"fontStyle": "normal",
-							"fontWeight": "900",
+							"fontFamily": "Source Serif 4",
+							"fontStyle": "italic",
+							"fontWeight": "400",
+							"fontDisplay": "swap",
 							"src": [
-								"file:./fonts/roboto-slab-black.ttf"
+								"file:./fonts/source-serif-4-v15-latin_latin-ext-italic.woff2"
+							]
+						},
+						{
+							"fontFamily": "Source Serif 4",
+							"fontStyle": "normal",
+							"fontWeight": "700",
+							"fontDisplay": "swap",
+							"src": [
+								"file:./fonts/source-serif-4-v15-latin_latin-ext-700.woff2"
+							]
+						},
+						{
+							"fontFamily": "Source Serif 4",
+							"fontStyle": "italic",
+							"fontWeight": "700",
+							"fontDisplay": "swap",
+							"src": [
+								"file:./fonts/source-serif-4-v15-latin_latin-ext-700italic.woff2"
 							]
 						}
-					],
-					"fontFamily": "\"Roboto Slab Black\", \"Arial Black\" sans-serif",
-					"name": "Roboto Slab Black",
-					"slug": "roboto-slab-black"
-				},
-
-				{
-					"fontFamily": "-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen-Sans,Ubuntu,Cantarell,\"Helvetica Neue\",sans-serif",
-					"name": "System Font",
-					"slug": "system-font"
+					]
 				}
 			],
 			"fontSizes": [
 				{
-					"fluid": {
-						"min": "0.875rem",
-						"max": "1rem"
-					},
-					"size": "1rem",
-					"slug": "small"
+					"slug": "x-small",
+					"name": "Label",
+					"size": "0.8125rem",
+					"fluid": false
 				},
 				{
-					"size": "1.5625rem",
 					"slug": "small",
+					"name": "Meta",
+					"size": "0.9375rem",
 					"fluid": false
 				},
 				{
-					"size": "1.8594rem",
-					"slug": "subline",
-					"fluid": false
+					"slug": "medium",
+					"name": "Body",
+					"size": "1.1875rem",
+					"fluid": {
+						"min": "1.125rem",
+						"max": "1.1875rem"
+					}
 				},
 				{
-					"size": "2.625rem",
 					"slug": "large",
-					"fluid": false
+					"name": "Intro",
+					"size": "1.375rem",
+					"fluid": {
+						"min": "1.25rem",
+						"max": "1.375rem"
+					}
+				},
+				{
+					"slug": "x-large",
+					"name": "Section heading",
+					"size": "2.25rem",
+					"fluid": {
+						"min": "1.75rem",
+						"max": "2.25rem"
+					}
+				},
+				{
+					"slug": "xx-large",
+					"name": "Page title",
+					"size": "4rem",
+					"fluid": {
+						"min": "2.5rem",
+						"max": "4rem"
+					}
+				},
+				{
+					"slug": "xxx-large",
+					"name": "Book title",
+					"size": "4.5rem",
+					"fluid": {
+						"min": "2.75rem",
+						"max": "4.5rem"
+					}
 				}
 			]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--wp--preset--color--base)",
+			"text": "var(--wp--preset--color--contrast)"
 		},
-		"useRootPaddingAwareAlignments": true
+		"spacing": {
+			"padding": {
+				"top": "0",
+				"bottom": "0",
+				"left": "var(--wp--preset--spacing--80)",
+				"right": "var(--wp--preset--spacing--80)"
+			},
+			"blockGap": "1.25rem"
+		},
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--body)",
+			"fontSize": "var(--wp--preset--font-size--medium)",
+			"fontWeight": "400",
+			"lineHeight": "1.6"
+		},
+		"elements": {
+			"link": {
+				"color": {
+					"text": "var(--wp--preset--color--accent)"
+				},
+				"typography": {
+					"textDecoration": "underline"
+				},
+				":hover": {
+					"color": {
+						"text": "var(--wp--preset--color--accent-deep)"
+					}
+				},
+				":focus": {
+					"color": {
+						"text": "var(--wp--preset--color--accent-deep)"
+					}
+				}
+			},
+			"heading": {
+				"color": {
+					"text": "var(--wp--preset--color--contrast)"
+				},
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--heading)",
+					"fontWeight": "600",
+					"lineHeight": "1.1",
+					"letterSpacing": "-0.02em"
+				}
+			},
+			"h1": {
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--xx-large)",
+					"lineHeight": "1",
+					"letterSpacing": "-0.025em"
+				}
+			},
+			"h2": {
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--x-large)"
+				}
+			},
+			"h3": {
+				"typography": {
+					"fontSize": "1.375rem",
+					"letterSpacing": "-0.01em"
+				}
+			},
+			"h4": {
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--medium)"
+				}
+			},
+			"h5": {
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--small)"
+				}
+			},
+			"h6": {
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--x-small)"
+				}
+			},
+			"button": {
+				"color": {
+					"background": "var(--wp--preset--color--accent)",
+					"text": "var(--wp--preset--color--base)"
+				},
+				"border": {
+					"radius": "0",
+					"width": "1px",
+					"style": "solid",
+					"color": "var(--wp--preset--color--accent)"
+				},
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--heading)",
+					"fontSize": "1rem",
+					"fontWeight": "500"
+				},
+				"spacing": {
+					"padding": {
+						"top": "0.8rem",
+						"bottom": "0.8rem",
+						"left": "1.375rem",
+						"right": "1.375rem"
+					}
+				},
+				":hover": {
+					"color": {
+						"background": "var(--wp--preset--color--accent-deep)",
+						"text": "var(--wp--preset--color--base)"
+					},
+					"border": {
+						"color": "var(--wp--preset--color--accent-deep)"
+					}
+				},
+				":focus": {
+					"color": {
+						"background": "var(--wp--preset--color--accent-deep)",
+						"text": "var(--wp--preset--color--base)"
+					}
+				}
+			},
+			"caption": {
+				"color": {
+					"text": "var(--wp--preset--color--contrast-quiet)"
+				},
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--heading)",
+					"fontSize": "var(--wp--preset--font-size--small)"
+				}
+			}
+		},
+		"blocks": {
+			"core/site-title": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--heading)",
+					"fontSize": "clamp(1.875rem, 1.5rem + 1.6vw, 2.75rem)",
+					"fontWeight": "600",
+					"letterSpacing": "-0.02em",
+					"lineHeight": "1"
+				},
+				"elements": {
+					"link": {
+						"color": {
+							"text": "var(--wp--preset--color--contrast)"
+						},
+						"typography": {
+							"textDecoration": "none"
+						}
+					}
+				}
+			},
+			"core/site-tagline": {
+				"color": {
+					"text": "var(--wp--preset--color--contrast-quiet)"
+				},
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--heading)",
+					"fontSize": "var(--wp--preset--font-size--small)"
+				}
+			},
+			"core/navigation": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--heading)",
+					"fontSize": "1.0625rem",
+					"fontWeight": "500"
+				},
+				"elements": {
+					"link": {
+						"typography": {
+							"textDecoration": "none"
+						},
+						":hover": {
+							"typography": {
+								"textDecoration": "underline"
+							}
+						}
+					}
+				}
+			},
+			"core/post-title": {
+				"typography": {
+					"fontWeight": "600"
+				}
+			},
+			"core/post-date": {
+				"color": {
+					"text": "var(--wp--preset--color--contrast-quiet)"
+				},
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--heading)",
+					"fontSize": "var(--wp--preset--font-size--small)"
+				}
+			},
+			"core/post-excerpt": {
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--medium)"
+				}
+			},
+			"core/quote": {
+				"border": {
+					"left": {
+						"width": "2px",
+						"style": "solid",
+						"color": "var(--wp--preset--color--accent)"
+					}
+				},
+				"spacing": {
+					"padding": {
+						"left": "1.5rem"
+					}
+				},
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--large)",
+					"fontStyle": "italic"
+				}
+			},
+			"core/separator": {
+				"color": {
+					"text": "var(--wp--preset--color--accent)"
+				},
+				"border": {
+					"width": "2px 0 0 0"
+				}
+			},
+			"core/search": {
+				"css": "& .wp-block-search__input{border-radius:0;padding-inline:0.75rem;}",
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--heading)",
+					"fontSize": "var(--wp--preset--font-size--small)"
+				},
+				"border": {
+					"color": "var(--wp--preset--color--line)",
+					"radius": "0",
+					"width": "1px"
+				},
+				"elements": {
+					"button": {
+						"color": {
+							"background": "transparent",
+							"text": "var(--wp--preset--color--contrast)"
+						},
+						"border": {
+							"radius": "0",
+							"width": "0"
+						},
+						"spacing": {
+							"margin": {
+								"left": "0"
+							}
+						},
+						":hover": {
+							"color": {
+								"background": "var(--wp--preset--color--accent-tint)",
+								"text": "var(--wp--preset--color--contrast)"
+							}
+						}
+					}
+				}
+			},
+			"core/details": {
+				"border": {
+					"bottom": {
+						"width": "1px",
+						"style": "solid",
+						"color": "var(--wp--preset--color--line)"
+					}
+				}
+			},
+			"core/image": {
+				"border": {
+					"radius": "0"
+				}
+			},
+			"core/button": {
+				"variations": {
+					"outline": {
+						"color": {
+							"background": "transparent",
+							"text": "var(--wp--preset--color--accent)"
+						},
+						"border": {
+							"color": "var(--wp--preset--color--accent)"
+						}
+					}
+				}
+			},
+			"core/site-logo": {
+				"border": {
+					"radius": "0"
+				}
+			}
+		}
 	}
 }

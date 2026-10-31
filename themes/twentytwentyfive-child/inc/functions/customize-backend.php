@@ -4,7 +4,6 @@ if ( is_admin() ) {
 
 	if ( ! defined( 'custom_CUSTOM_BLOCK_TYPES' ) ) {
 		$custom_custom_block_types = array(
-			'custom-card',
 		);
 		define( 'custom_CUSTOM_BLOCK_TYPES', $custom_custom_block_types );
 	}
